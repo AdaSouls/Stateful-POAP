@@ -1,4 +1,4 @@
-# NFT Game Node Template
+# AdaSouls Stateful POAP
 
 This documentation provides a basic overview of the template. Each module has its own `README` file with more detailed information.
 
