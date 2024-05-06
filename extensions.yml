@@ -2,15 +2,15 @@ extensions:
   - name: "statefulPoap"
     type: erc721
     contractAddress: "0xd4ce16b9ef9dcb76f3caef9a5875e9f461e364de"
-    startBlockHeight: 27502111
+    startBlockHeight: 28121611
     scheduledPrefix: "nftmint"
   - name: "statefulSoulboundPoap"
     type: erc721
     contractAddress: "0x466b22dcae2c8de98e1bcea839a70145537da97a"
-    startBlockHeight: 27545427
+    startBlockHeight: 28121611
     scheduledPrefix: "nftmint"
   - name: "statefulConsensualSoulboundPoap"
     type: erc721
     contractAddress: "0x42bc413e4b3ddf30a7ce55ba03c5d3c28d1d9e46"
-    startBlockHeight: 27545691
+    startBlockHeight: 28121611
     scheduledPrefix: "nftmint"

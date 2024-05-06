@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "initialize": "npm ci && cp .env.example ../.env.localhost && cp extensions.yml ../extensions.yml",
+    "initialize": "npm ci && cp .env.testnet ../.env.testnet && cp extensions.yml ../extensions.yml",
     "pack": "sh scripts/pack.sh",
     "pack:middleware": "npm run build -w middleware/",
     "build": "npx tsc --build tsconfig.build.json",
@@ -13,7 +13,7 @@
     "prettier:fix": "prettier --write --config .prettierrc --ignore-path .prettierignore --check .",
     "test": "DOTENV_CONFIG_PATH=../.env.localhost jest",
     "test:watch": "npm test -- --watch",
-    "database:up": "cd db/docker && docker compose up",
+    "database:up": "cd db/docker && docker-compose up",
     "database:reset": "node change-db.js",
     "compile:api": "npm run compile -w api/",
     "compile:db": "npm run compile -w db/",
