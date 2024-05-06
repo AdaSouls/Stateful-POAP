@@ -1,1 +1,1 @@
-export type NftType = 'air' | 'earth' | 'ether' | 'fire' | 'water';
+export type PoapType = 'poap' | 'soulbound' | 'consensual';

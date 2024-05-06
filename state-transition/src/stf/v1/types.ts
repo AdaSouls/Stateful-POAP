@@ -1,4 +1,4 @@
-import type { CharacterType, InvalidInput } from '@game/utils';
+import type { PoapType, InvalidInput } from '@game/utils';
 import type { WalletAddress } from '@paima/sdk/utils';
 
 export interface LvlUpInput {
@@ -11,16 +11,16 @@ export interface ScheduledDataInput {
   input: 'scheduledData';
 }
 
-export interface NftMintInput extends ScheduledDataInput {
-  effect: 'nftMint';
+export interface PoapMintInput extends ScheduledDataInput {
+  effect: 'poapMint';
   tokenId: string;
   // contract address
   address: WalletAddress;
-  type: CharacterType;
+  type: PoapType;
 }
 
-export function isNftMint(input: ScheduledDataInput): input is NftMintInput {
-  return (input as NftMintInput).effect === 'nftMint';
+export function isNftMint(input: ScheduledDataInput): input is PoapMintInput {
+  return (input as PoapMintInput).effect === 'poapMint';
 }
 
-export type ParsedSubmittedInput = LvlUpInput | NftMintInput | InvalidInput;
+export type ParsedSubmittedInput = LvlUpInput | PoapMintInput | InvalidInput;
