@@ -1,6 +1,6 @@
 /** Types generated for queries found in "src/select.sql" */
 import { PreparedQuery } from '@pgtyped/runtime';
-import type { PoapType } from '@src/common.js';
+import type { PoapType } from './common.js';
 /** 'GetUserPoaps' parameters type */
 export interface IGetUserPoapsParams {
     poaps: readonly (string)[];

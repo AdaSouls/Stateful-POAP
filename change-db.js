@@ -47,7 +47,7 @@ const updateEnvFile = async file => {
 // Update docker compose volume with unique new name.
 const updateDockerFile = async file => {
   const data = await fs.promises.readFile(__dirname + '/' + file, 'utf8');
-  const ndata = data.replace(/nft-lvlup-.+?-db/g, 'nft-lvlup-' + new Date().getTime() + '-db');
+  const ndata = data.replace(/poap-.+?-db/g, 'poap-' + new Date().getTime() + '-db');
   await fs.promises.writeFile(file, ndata, 'utf8');
 };
 

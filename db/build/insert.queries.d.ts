@@ -1,6 +1,6 @@
 /** Types generated for queries found in "src/insert.sql" */
 import { PreparedQuery } from '@pgtyped/runtime';
-import type { PoapType } from '@src/common.js';
+import type { PoapType } from './common.js';
 /** 'CreatePoap' parameters type */
 export interface ICreatePoapParams {
     address: string;
