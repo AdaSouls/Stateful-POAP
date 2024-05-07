@@ -1,36 +1,35 @@
 /** Types generated for queries found in "src/select.sql" */
 import { PreparedQuery } from '@pgtyped/runtime';
 
-import type { NftType } from '@src/common.js';
+import type { PoapType } from '@src/common.js';
 
-/** 'GetUserCharacters' parameters type */
-export interface IGetUserCharactersParams {
-  characters: readonly (string)[];
+/** 'GetUserPoaps' parameters type */
+export interface IGetUserPoapsParams {
+  poaps: readonly (string)[];
 }
 
-/** 'GetUserCharacters' return type */
-export interface IGetUserCharactersResult {
+/** 'GetUserPoaps' return type */
+export interface IGetUserPoapsResult {
   address: string;
-  level: number;
   nft_id: string;
-  type: NftType;
+  type: PoapType;
 }
 
-/** 'GetUserCharacters' query type */
-export interface IGetUserCharactersQuery {
-  params: IGetUserCharactersParams;
-  result: IGetUserCharactersResult;
+/** 'GetUserPoaps' query type */
+export interface IGetUserPoapsQuery {
+  params: IGetUserPoapsParams;
+  result: IGetUserPoapsResult;
 }
 
-const getUserCharactersIR: any = {"usedParamSet":{"characters":true},"params":[{"name":"characters","required":true,"transform":{"type":"array_spread"},"locs":[{"a":42,"b":53}]}],"statement":"SELECT * FROM characters \nWHERE nft_id IN :characters!"};
+const getUserPoapsIR: any = {"usedParamSet":{"poaps":true},"params":[{"name":"poaps","required":true,"transform":{"type":"array_spread"},"locs":[{"a":37,"b":43}]}],"statement":"SELECT * FROM poaps \nWHERE nft_id IN :poaps!"};
 
 /**
  * Query generated from SQL:
  * ```
- * SELECT * FROM characters 
- * WHERE nft_id IN :characters!
+ * SELECT * FROM poaps 
+ * WHERE nft_id IN :poaps!
  * ```
  */
-export const getUserCharacters = new PreparedQuery<IGetUserCharactersParams,IGetUserCharactersResult>(getUserCharactersIR);
+export const getUserPoaps = new PreparedQuery<IGetUserPoapsParams,IGetUserPoapsResult>(getUserPoapsIR);
 
 

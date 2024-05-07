@@ -1,23 +1,19 @@
-import { characters } from '@game/utils';
+import { poaps } from '@game/utils';
 import { PaimaParser } from '@paima/sdk/concise';
 const myGrammar = `
+eventCreate         = eventcreate | 
+poapMint            = poapmint|address|tokenId|type
 lvlUp               = l|address|*tokenId
-nftMint             = nftmint|address|tokenId|type
 `;
-const lvlUp = {
-    address: PaimaParser.WalletAddress(),
-    tokenId: PaimaParser.RegexParser(/^[0-9]+$/),
-};
-const nftMint = {
+const poapMint = {
     renameCommand: 'scheduledData',
-    effect: 'nftMint',
+    effect: 'poapMint',
     address: PaimaParser.WalletAddress(),
     tokenId: PaimaParser.NumberParser(),
-    type: PaimaParser.EnumParser(characters),
+    type: PaimaParser.EnumParser(poaps),
 };
 const parserCommands = {
-    lvlUp,
-    nftMint,
+    poapMint,
 };
 const myParser = new PaimaParser(myGrammar, parserCommands);
 export function isInvalid(input) {

@@ -1,4 +1,4 @@
-import type { IGetUserCharactersResult } from '@game/db';
+import type { IGetUserPoapsResult } from '@game/db';
 import type { FailedResult, SuccessfulResult } from '@paima/sdk/mw-core';
 export type ActionResult = BaseResult | FailedResult;
 export type Result<T> = SuccessfulResult<T> | FailedResult;
@@ -7,6 +7,6 @@ interface BaseResult {
     message?: string;
 }
 export interface LevelUpResponse {
-    character: IGetUserCharactersResult;
+    character: IGetUserPoapsResult;
 }
 export {};

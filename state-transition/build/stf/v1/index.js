@@ -1,5 +1,5 @@
 import parse, { isInvalid } from './parser.js';
-import { lvlUp, scheduledData } from './transition.js';
+import { scheduledData } from './transition.js';
 // entrypoint for your state machine
 export default async function (inputData, _blockHeight, _randomnessGenerator, dbConn) {
     console.log(inputData, 'parsing input data');
@@ -12,8 +12,6 @@ export default async function (inputData, _blockHeight, _randomnessGenerator, db
     }
     console.log(`Input string parsed as: ${parsed.input}`);
     switch (parsed.input) {
-        case 'lvlUp':
-            return lvlUp(user, parsed, dbConn);
         case 'scheduledData':
             if (!inputData.scheduled)
                 return [];

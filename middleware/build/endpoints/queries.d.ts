@@ -1,6 +1,6 @@
-import type { OwnedCharactersResponse } from '@game/utils';
+import type { OwnedPoapsResponse } from '@game/utils';
 import type { Result } from '../types';
-export declare function getOwnedCharacters(wallet: string): Promise<Result<OwnedCharactersResponse>>;
+export declare function getOwnedPoaps(wallet: string): Promise<Result<OwnedPoapsResponse>>;
 export declare const queryEndpoints: {
-    getOwnedCharacters: typeof getOwnedCharacters;
+    getOwnedPoaps: typeof getOwnedPoaps;
 };

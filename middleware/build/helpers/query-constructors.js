@@ -1,6 +1,6 @@
 import { buildBackendQuery } from '@paima/sdk/mw-core';
-export function backendQueryOwnedCharacters(wallet) {
-    const endpoint = 'owned_characters';
+export function backendQueryOwnedPoaps(wallet) {
+    const endpoint = 'owned_poaps';
     const options = { wallet };
     return buildBackendQuery(endpoint, options);
 }

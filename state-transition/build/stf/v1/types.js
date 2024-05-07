@@ -1,3 +1,3 @@
-export function isNftMint(input) {
-    return input.effect === 'nftMint';
+export function isPoapMint(input) {
+    return input.effect === 'poapMint';
 }

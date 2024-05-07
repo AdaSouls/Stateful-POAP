@@ -1,12 +1,12 @@
-import type { OwnedCharactersResponse } from '@game/utils';
-import { backendQueryOwnedCharacters } from '../helpers/query-constructors';
+import type { OwnedPoapsResponse } from '@game/utils';
+import { backendQueryOwnedPoaps } from '../helpers/query-constructors';
 import type { Result } from '../types';
 
-export async function getOwnedCharacters(wallet: string): Promise<Result<OwnedCharactersResponse>> {
-  const query = backendQueryOwnedCharacters(wallet);
+export async function getOwnedPoaps(wallet: string): Promise<Result<OwnedPoapsResponse>> {
+  const query = backendQueryOwnedPoaps(wallet);
   const response = await fetch(query);
 
-  const json = (await response.json()) as OwnedCharactersResponse;
+  const json = (await response.json()) as OwnedPoapsResponse;
   return {
     success: true,
     result: json,
@@ -14,5 +14,5 @@ export async function getOwnedCharacters(wallet: string): Promise<Result<OwnedCh
 }
 
 export const queryEndpoints = {
-  getOwnedCharacters,
+  getOwnedPoaps,
 };

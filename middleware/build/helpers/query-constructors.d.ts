@@ -1,1 +1,1 @@
-export declare function backendQueryOwnedCharacters(wallet: string): string;
+export declare function backendQueryOwnedPoaps(wallet: string): string;

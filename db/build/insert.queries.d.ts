@@ -1,33 +1,31 @@
 /** Types generated for queries found in "src/insert.sql" */
 import { PreparedQuery } from '@pgtyped/runtime';
-import type { NftType } from '@src/common.js';
-/** 'CreateCharacter' parameters type */
-export interface ICreateCharacterParams {
+import type { PoapType } from '@src/common.js';
+/** 'CreatePoap' parameters type */
+export interface ICreatePoapParams {
     address: string;
     nft_id: string;
-    type: NftType;
+    type: PoapType;
 }
-/** 'CreateCharacter' return type */
-export type ICreateCharacterResult = void;
-/** 'CreateCharacter' query type */
-export interface ICreateCharacterQuery {
-    params: ICreateCharacterParams;
-    result: ICreateCharacterResult;
+/** 'CreatePoap' return type */
+export type ICreatePoapResult = void;
+/** 'CreatePoap' query type */
+export interface ICreatePoapQuery {
+    params: ICreatePoapParams;
+    result: ICreatePoapResult;
 }
 /**
  * Query generated from SQL:
  * ```
- * INSERT INTO characters(
+ * INSERT INTO poaps(
  *   address,
  *   nft_id,
- *   level,
  *   type)
  * VALUES (
  *   :address!,
  *   :nft_id!,
- *   1,
  *   :type!
  * )
  * ```
  */
-export declare const createCharacter: PreparedQuery<ICreateCharacterParams, void>;
+export declare const createPoap: PreparedQuery<ICreatePoapParams, void>;

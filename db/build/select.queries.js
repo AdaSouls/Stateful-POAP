@@ -1,11 +1,11 @@
 /** Types generated for queries found in "src/select.sql" */
 import { PreparedQuery } from '@pgtyped/runtime';
-const getUserCharactersIR = { "usedParamSet": { "characters": true }, "params": [{ "name": "characters", "required": true, "transform": { "type": "array_spread" }, "locs": [{ "a": 42, "b": 53 }] }], "statement": "SELECT * FROM characters \nWHERE nft_id IN :characters!" };
+const getUserPoapsIR = { "usedParamSet": { "poaps": true }, "params": [{ "name": "poaps", "required": true, "transform": { "type": "array_spread" }, "locs": [{ "a": 37, "b": 43 }] }], "statement": "SELECT * FROM poaps \nWHERE nft_id IN :poaps!" };
 /**
  * Query generated from SQL:
  * ```
- * SELECT * FROM characters
- * WHERE nft_id IN :characters!
+ * SELECT * FROM poaps
+ * WHERE nft_id IN :poaps!
  * ```
  */
-export const getUserCharacters = new PreparedQuery(getUserCharactersIR);
+export const getUserPoaps = new PreparedQuery(getUserPoapsIR);

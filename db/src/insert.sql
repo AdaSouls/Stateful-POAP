@@ -1,14 +1,12 @@
 /* 
-  @name createCharacter
+  @name createPoap
 */
-INSERT INTO characters(
+INSERT INTO poaps(
   address,
   nft_id,
-  level,
   type)
 VALUES (
   :address!,
   :nft_id!,
-  1,
   :type!
 );

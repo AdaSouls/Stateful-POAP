@@ -8,25 +8,25 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 import { Controller, Get, Query, Route } from 'tsoa';
-import { getUserCharacters, requirePool } from '@game/db';
+import { getUserPoaps, requirePool } from '@game/db';
 import { getAllOwnedNfts } from '@paima/node-sdk/utils-backend';
-let OwnedCharactersController = class OwnedCharactersController extends Controller {
+let OwnedPoapsController = class OwnedPoapsController extends Controller {
     async get(wallet) {
         const pool = requirePool();
         wallet = wallet.toLowerCase();
         const nfts = await getAllOwnedNfts(pool, wallet);
         if (nfts.length === 0) {
-            return { characters: [] };
+            return { poaps: [] };
         }
-        const userCharacters = await getUserCharacters.run({ characters: nfts.map(nft => nft.tokenId.toString()) }, pool);
-        return { characters: userCharacters };
+        const userPoaps = await getUserPoaps.run({ poaps: nfts.map(nft => nft.tokenId.toString()) }, pool);
+        return { poaps: userPoaps };
     }
 };
 __decorate([
     Get(),
     __param(0, Query())
-], OwnedCharactersController.prototype, "get", null);
-OwnedCharactersController = __decorate([
-    Route('owned_characters')
-], OwnedCharactersController);
-export { OwnedCharactersController };
+], OwnedPoapsController.prototype, "get", null);
+OwnedPoapsController = __decorate([
+    Route('owned_poaps')
+], OwnedPoapsController);
+export { OwnedPoapsController };

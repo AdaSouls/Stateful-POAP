@@ -1,42 +1,40 @@
 /** Types generated for queries found in "src/insert.sql" */
 import { PreparedQuery } from '@pgtyped/runtime';
 
-import type { NftType } from '@src/common.js';
+import type { PoapType } from '@src/common.js';
 
-/** 'CreateCharacter' parameters type */
-export interface ICreateCharacterParams {
+/** 'CreatePoap' parameters type */
+export interface ICreatePoapParams {
   address: string;
   nft_id: string;
-  type: NftType;
+  type: PoapType;
 }
 
-/** 'CreateCharacter' return type */
-export type ICreateCharacterResult = void;
+/** 'CreatePoap' return type */
+export type ICreatePoapResult = void;
 
-/** 'CreateCharacter' query type */
-export interface ICreateCharacterQuery {
-  params: ICreateCharacterParams;
-  result: ICreateCharacterResult;
+/** 'CreatePoap' query type */
+export interface ICreatePoapQuery {
+  params: ICreatePoapParams;
+  result: ICreatePoapResult;
 }
 
-const createCharacterIR: any = {"usedParamSet":{"address":true,"nft_id":true,"type":true},"params":[{"name":"address","required":true,"transform":{"type":"scalar"},"locs":[{"a":73,"b":81}]},{"name":"nft_id","required":true,"transform":{"type":"scalar"},"locs":[{"a":86,"b":93}]},{"name":"type","required":true,"transform":{"type":"scalar"},"locs":[{"a":103,"b":108}]}],"statement":"INSERT INTO characters(\n  address,\n  nft_id,\n  level,\n  type)\nVALUES (\n  :address!,\n  :nft_id!,\n  1,\n  :type!\n)"};
+const createPoapIR: any = {"usedParamSet":{"address":true,"nft_id":true,"type":true},"params":[{"name":"address","required":true,"transform":{"type":"scalar"},"locs":[{"a":59,"b":67}]},{"name":"nft_id","required":true,"transform":{"type":"scalar"},"locs":[{"a":72,"b":79}]},{"name":"type","required":true,"transform":{"type":"scalar"},"locs":[{"a":84,"b":89}]}],"statement":"INSERT INTO poaps(\n  address,\n  nft_id,\n  type)\nVALUES (\n  :address!,\n  :nft_id!,\n  :type!\n)"};
 
 /**
  * Query generated from SQL:
  * ```
- * INSERT INTO characters(
+ * INSERT INTO poaps(
  *   address,
  *   nft_id,
- *   level,
  *   type)
  * VALUES (
  *   :address!,
  *   :nft_id!,
- *   1,
  *   :type!
  * )
  * ```
  */
-export const createCharacter = new PreparedQuery<ICreateCharacterParams,ICreateCharacterResult>(createCharacterIR);
+export const createPoap = new PreparedQuery<ICreatePoapParams,ICreatePoapResult>(createPoapIR);
 
 

@@ -2,17 +2,14 @@ import type { InvalidInput } from '@game/utils';
 import { poaps } from '@game/utils';
 import type { ParserRecord } from '@paima/sdk/concise';
 import { PaimaParser } from '@paima/sdk/concise';
-import type { LvlUpInput, PoapMintInput, ParsedSubmittedInput } from './types';
+import type { PoapMintInput, ParsedSubmittedInput } from './types';
 
 const myGrammar = `
+eventCreate         = eventcreate | 
+poapMint            = poapmint|address|tokenId|type
 lvlUp               = l|address|*tokenId
-poapMint             = poapmint|address|tokenId|type
 `;
 
-const lvlUp: ParserRecord<LvlUpInput> = {
-  address: PaimaParser.WalletAddress(),
-  tokenId: PaimaParser.RegexParser(/^[0-9]+$/),
-};
 const poapMint: ParserRecord<PoapMintInput> = {
   renameCommand: 'scheduledData',
   effect: 'poapMint',
@@ -22,7 +19,6 @@ const poapMint: ParserRecord<PoapMintInput> = {
 };
 
 const parserCommands: Record<string, ParserRecord<ParsedSubmittedInput>> = {
-  lvlUp,
   poapMint,
 };
 

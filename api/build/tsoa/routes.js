@@ -3,7 +3,7 @@
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { ValidationService, ValidateError, fetchMiddlewares } from '@tsoa/runtime';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-import { OwnedCharactersController } from './../controllers/ownedCharacters';
+import { OwnedPoapsController } from '../controllers/ownedPoaps';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 const models = {
     "NftType": {
@@ -11,21 +11,20 @@ const models = {
         "type": { "dataType": "union", "subSchemas": [{ "dataType": "enum", "enums": ["air"] }, { "dataType": "enum", "enums": ["earth"] }, { "dataType": "enum", "enums": ["ether"] }, { "dataType": "enum", "enums": ["fire"] }, { "dataType": "enum", "enums": ["water"] }], "validators": {} },
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "IGetUserCharactersResult": {
+    "IGetUserPoapsResult": {
         "dataType": "refObject",
         "properties": {
             "address": { "dataType": "string", "required": true },
-            "level": { "dataType": "double", "required": true },
             "nft_id": { "dataType": "string", "required": true },
             "type": { "ref": "NftType", "required": true },
         },
         "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "OwnedCharactersResponse": {
+    "OwnedPoapsResponse": {
         "dataType": "refObject",
         "properties": {
-            "characters": { "dataType": "array", "array": { "dataType": "refObject", "ref": "IGetUserCharactersResult" }, "required": true },
+            "poaps": { "dataType": "array", "array": { "dataType": "refObject", "ref": "IGetUserPoapsResult" }, "required": true },
         },
         "additionalProperties": false,
     },
@@ -38,7 +37,7 @@ export function RegisterRoutes(app) {
     //  NOTE: If you do not see routes for all of your controllers in this file, then you might not have informed tsoa of where to look
     //      Please look into the "controllerPathGlobs" config option described in the readme: https://github.com/lukeautry/tsoa
     // ###########################################################################################################
-    app.get('/owned_characters', ...(fetchMiddlewares(OwnedCharactersController)), ...(fetchMiddlewares(OwnedCharactersController.prototype.get)), function OwnedCharactersController_get(request, response, next) {
+    app.get('/owned_poaps', ...(fetchMiddlewares(OwnedPoapsController)), ...(fetchMiddlewares(OwnedPoapsController.prototype.get)), function OwnedPoapsController_get(request, response, next) {
         const args = {
             wallet: { "in": "query", "name": "wallet", "required": true, "dataType": "string" },
         };
@@ -46,7 +45,7 @@ export function RegisterRoutes(app) {
         let validatedArgs = [];
         try {
             validatedArgs = getValidatedArgs(args, request, response);
-            const controller = new OwnedCharactersController();
+            const controller = new OwnedPoapsController();
             const promise = controller.get.apply(controller, validatedArgs);
             promiseHandler(controller, promise, response, undefined, next);
         }

@@ -17,12 +17,12 @@
   "db": {
     "dbName": "postgres",
     "user": "postgres",
-    "password": "12345678",
+    "password": "postgres",
     "host": "localhost",
     "port": 5432,
     "ssl": false
   },
   "typesOverrides": {
-    "nft_type": "@src/common.js#NftType"
+    "poap_type": "@src/common.js#PoapType"
   }
 }

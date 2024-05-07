@@ -1,6 +1,6 @@
 /*
-  @name getUserCharacters
-  @param characters -> (...)
+  @name getUserPoaps
+  @param poaps -> (...)
 */
-SELECT * FROM characters 
-WHERE nft_id IN :characters!;
+SELECT * FROM poaps 
+WHERE nft_id IN :poaps!;

@@ -1,6 +1,6 @@
-import { backendQueryOwnedCharacters } from '../helpers/query-constructors';
-export async function getOwnedCharacters(wallet) {
-    const query = backendQueryOwnedCharacters(wallet);
+import { backendQueryOwnedPoaps } from '../helpers/query-constructors';
+export async function getOwnedPoaps(wallet) {
+    const query = backendQueryOwnedPoaps(wallet);
     const response = await fetch(query);
     const json = (await response.json());
     return {
@@ -9,5 +9,5 @@ export async function getOwnedCharacters(wallet) {
     };
 }
 export const queryEndpoints = {
-    getOwnedCharacters,
+    getOwnedPoaps,
 };

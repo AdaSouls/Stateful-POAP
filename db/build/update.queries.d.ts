@@ -1,17 +1,11 @@
 /** Types generated for queries found in "src/update.sql" */
 import { PreparedQuery } from '@pgtyped/runtime';
-/** 'LvlUpCharacter' parameters type */
-export interface ILvlUpCharacterParams {
-    address: string;
-    nft_id: string;
-}
-/** 'LvlUpCharacter' return type */
-export type ILvlUpCharacterResult = void;
-/** 'LvlUpCharacter' query type */
-export interface ILvlUpCharacterQuery {
-    params: ILvlUpCharacterParams;
-    result: ILvlUpCharacterResult;
-}
+/** Query 'LvlUpCharacter' is invalid, so its result is assigned type 'never'.
+ *  */
+export type ILvlUpCharacterResult = never;
+/** Query 'LvlUpCharacter' is invalid, so its parameters are assigned type 'never'.
+ *  */
+export type ILvlUpCharacterParams = never;
 /**
  * Query generated from SQL:
  * ```
@@ -21,4 +15,4 @@ export interface ILvlUpCharacterQuery {
  * WHERE nft_id = :nft_id! AND address = :address!
  * ```
  */
-export declare const lvlUpCharacter: PreparedQuery<ILvlUpCharacterParams, void>;
+export declare const lvlUpCharacter: PreparedQuery<never, never>;

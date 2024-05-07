@@ -1,6 +1,6 @@
 declare const endpoints: {
     levelUp: (contractAddress: string, nftId: string) => Promise<import("@paima/sdk/mw-core").Result<import("./types").LevelUpResponse>>;
-    getOwnedCharacters: typeof import("./endpoints/queries").getOwnedCharacters;
+    getOwnedPoaps: typeof import("./endpoints/queries").getOwnedPoaps;
     exportLogs: () => string;
     pushLog: (message: any, ...optionalParams: any[]) => void;
     getLatestProcessedBlockHeight: () => Promise<import("@paima/sdk/mw-core").Result<number>>;
