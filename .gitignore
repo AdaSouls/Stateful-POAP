@@ -5,7 +5,7 @@
 /smart-contract
 /snapshots
 /batcher
-/contracts
+/contracts/evm/ignition/deployments
 
 # Config files for CDE
 /*.yml
