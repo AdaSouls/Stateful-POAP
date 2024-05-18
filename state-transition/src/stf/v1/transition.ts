@@ -12,7 +12,7 @@ export const poapMint = async (input: PoapMintInput): Promise<SQLUpdate[]> => {
   return [poapCreateQuery];
 };
 
-export const scheduledData = async (input: ScheduledDataInput): Promise<SQLUpdate[]> => {
+export const scheduledData = async (input: PoapMintInput): Promise<SQLUpdate[]> => {
   if (isPoapMint(input)) {
     return poapMint(input);
   }
