@@ -1,7 +1,7 @@
 {
-  "Character": {
-    "name": "Player Character",
-    "ticker": "PC",
-    "price": 1
+  "Poap": {
+    "name": "AdaSouls Test Stateful Poap",
+    "symbol": "TSPOAP",
+    "baseUri": "https://ipfs.io/ipfs/QmQ8kV9JuhkiSt7Qp7HTsiyVUiaobFeTTyjK71q5k8e46w/"
   }
 }

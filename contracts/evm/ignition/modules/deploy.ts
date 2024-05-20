@@ -1,58 +1,32 @@
 import { buildModule } from '@nomicfoundation/hardhat-ignition/modules';
-/* import type {
+import type {
   IgnitionModuleBuilder,
   NamedArtifactContractDeploymentFuture,
-} from '@nomicfoundation/ignition-core'; */
+} from '@nomicfoundation/ignition-core';
 
-/* function createNft(m: IgnitionModuleBuilder) {
+function createPoap(m: IgnitionModuleBuilder) {
   // This address is the owner of the ProxyAdmin contract,
   // so it will be the only account that can upgrade the proxy when needed.
   // https://github.com/NomicFoundation/hardhat-ignition/issues/673
   const proxyAdminOwner = m.getAccount(0);
 
   const name = m.getParameter('name');
-  const ticker = m.getParameter('ticker');
-  const nftContract = m.contract('AnnotatedMintNft', [
+  const symbol = m.getParameter('symbol');
+
+  const poapContract = m.contract('Poap', [
     name,
-    ticker,
-    1_000_000_000,
-    proxyAdminOwner,
+    symbol,
+    proxyAdminOwner
   ]);
 
-  return { nftContract };
-}
-function createNftNativeSale(
-  m: IgnitionModuleBuilder,
-  nftContract: NamedArtifactContractDeploymentFuture<'AnnotatedMintNft'>
-) {
-  // https://github.com/NomicFoundation/hardhat-ignition/issues/673
-  const proxyAdminOwner = m.getAccount(0);
-
-  // https://github.com/NomicFoundation/hardhat-ignition/issues/672
-  // const baseUri = m.getParameter('baseUri');
-  // m.call(nftContract, 'setBaseUri', [baseUri]);
-
-  const nftSaleContract = m.contract('TypedNativeNftSale', []);
-
-  // https://github.com/NomicFoundation/hardhat-ignition/issues/672
-  const price = m.getParameter('price');
-  m.call(nftSaleContract, 'updatePrice', [price]);
-
-  const nativeSaleProxyContract = m.contract('NativeNftSaleProxy', [
-    nftSaleContract,
-    proxyAdminOwner,
-    nftContract,
-    price,
-  ]);
-
-  // make that the NFT can be bought through the sale contract (and only the sale contract)
-  m.call(nftContract, 'setMinter', [nativeSaleProxyContract], {
-    id: 'AnnotatedMintNft_NativeNftSaleProxy_setMinter',
-  });
-
-  return { nativeSaleProxyContract };
+  // Initialize
+  const baseUri = m.getParameter('baseUri');
+  m.call(poapContract, "initialize(string,address[])", [baseUri, []]);
+  
+  return { poapContract };
 }
 
+/*
 function createNftErc20Sale(
   m: IgnitionModuleBuilder,
   nftContract: NamedArtifactContractDeploymentFuture<'AnnotatedMintNft'>
@@ -87,16 +61,15 @@ function createNftErc20Sale(
 
   return { erc20, erc20SaleProxyContract };
 }
+*/
 
-const accountModule = buildModule('Character', m => {
-  const { nftContract } = createNft(m);
+const poapModule = buildModule('Poap', m => {
+  const { poapContract } = createPoap(m);
 
   return {
-    nftContract,
-    ...createNftNativeSale(m, nftContract),
-    ...createNftErc20Sale(m, nftContract),
+    poapContract,
   };
-}); */
+});
 
 const L2Module = buildModule('L2Contract', m => {
   // https://github.com/NomicFoundation/hardhat-ignition/issues/673
@@ -108,6 +81,6 @@ export default buildModule('deploy', m => {
   // https://github.com/NomicFoundation/hardhat-ignition/issues/675
   return {
     ...m.useModule(L2Module),
-    //...m.useModule(accountModule),
+    ...m.useModule(poapModule),
   };
 });
