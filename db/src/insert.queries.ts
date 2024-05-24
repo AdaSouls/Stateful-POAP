@@ -8,6 +8,7 @@ export interface ICreatePoapParams {
   address: string;
   nft_id: string;
   type: PoapType;
+  initialEventData: string,
 }
 
 /** 'CreatePoap' return type */

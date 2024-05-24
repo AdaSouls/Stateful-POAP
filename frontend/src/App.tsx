@@ -51,7 +51,7 @@ function App() {
   return (
     <div className="container">
       <header>
-        <h1>Stateful NFT characters</h1>
+        <h1>Stateful POAP</h1>
       </header>
       <main>
         <div>

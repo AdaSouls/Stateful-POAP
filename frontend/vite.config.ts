@@ -24,7 +24,7 @@ const stdPaimaEnvVars = [
   'BACKEND_URI',
   'WEBSERVER_PORT',
 ];
-const appSpecific = ['NATIVE_NFT_SALE_PROXY', 'ERC20_NFT_SALE_PROXY', 'NFT'];
+const appSpecific = ['POAP_CONTRACT'];
 const envVarsToInclude = [
   // put the ENV vars you want to expose here
   ...stdPaimaEnvVars,

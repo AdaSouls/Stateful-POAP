@@ -8,7 +8,7 @@ import type { WalletAddress } from '@paima/sdk/utils';
 import { POAP_CODE, SOULBOUND_POAP_CODE, CONSENSUAL_SOULBOUND_POAP_CODE } from '@game/utils';
 
 export const poapMint = async (input: PoapMintInput): Promise<SQLUpdate[]> => {
-  const poapCreateQuery = persistCreate(input.address, input.tokenId, input.type);
+  const poapCreateQuery = persistCreate(input.address, input.tokenId, input.type, input.initialEventData);
   return [poapCreateQuery];
 };
 

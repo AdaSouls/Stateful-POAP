@@ -1,17 +1,52 @@
-# Files needed to run individual templates with paima-standalone locally, not relevant for version control
-/documentation
-/packaged
-/paima-sdk
-/smart-contract
-/snapshots
-/batcher
-/contracts/evm/ignition/deployments
+node_modules
+*.tsbuildinfo
 
-# Config files for CDE
-/*.yml
+build
+lib
+dist
+dist-ssr
 
-/logs.log
-# [dev-]paima-engine-[linux|mac] maybe others in the future
-/*paima-engine*
-/.env*
-node_modules/
+# Editor directories and files
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+snapshots
+
+*.local
+
+.env
+.env.mainnet
+.env.testnet
+
+# Frontend
+build.zip
+WebGL
+
+# recompiled code for standalone purposes
+packaged/*
+
+# builds
+api/build/**
+middleware/*.tsbuildinfo
+api/*.tsbuildinfo
+db/build/**
+db/*.tsbuildinfo
+game-logic/*.tsbuildinfo
+middleware/build/**
+middleware/*.tsbuildinfo
+state-transition/build/**
+state-transition/*.tsbuildinfo
+utils/*.tsbuildinfo

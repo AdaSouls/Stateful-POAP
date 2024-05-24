@@ -7,53 +7,46 @@
 		"requestBodies": {},
 		"responses": {},
 		"schemas": {
-			"NftType": {
+			"PoapType": {
 				"type": "string",
 				"enum": [
-					"air",
-					"earth",
-					"ether",
-					"fire",
-					"water"
+					"poap",
+					"soulbound",
+					"consensual"
 				]
 			},
-			"IGetUserCharactersResult": {
-				"description": "'GetUserCharacters' return type",
+			"IGetUserPoapsResult": {
+				"description": "'GetUserPoaps' return type",
 				"properties": {
 					"address": {
 						"type": "string"
-					},
-					"level": {
-						"type": "number",
-						"format": "double"
 					},
 					"nft_id": {
 						"type": "string"
 					},
 					"type": {
-						"$ref": "#/components/schemas/NftType"
+						"$ref": "#/components/schemas/PoapType"
 					}
 				},
 				"required": [
 					"address",
-					"level",
 					"nft_id",
 					"type"
 				],
 				"type": "object",
 				"additionalProperties": false
 			},
-			"OwnedCharactersResponse": {
+			"OwnedPoapsResponse": {
 				"properties": {
-					"characters": {
+					"poaps": {
 						"items": {
-							"$ref": "#/components/schemas/IGetUserCharactersResult"
+							"$ref": "#/components/schemas/IGetUserPoapsResult"
 						},
 						"type": "array"
 					}
 				},
 				"required": [
-					"characters"
+					"poaps"
 				],
 				"type": "object",
 				"additionalProperties": false
@@ -71,7 +64,7 @@
 		"contact": {}
 	},
 	"paths": {
-		"/owned_characters": {
+		"/owned_poaps": {
 			"get": {
 				"operationId": "Get",
 				"responses": {
@@ -80,7 +73,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/OwnedCharactersResponse"
+									"$ref": "#/components/schemas/OwnedPoapsResponse"
 								}
 							}
 						}

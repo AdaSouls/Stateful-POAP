@@ -10,12 +10,14 @@ import type { WalletAddress } from '@paima/sdk/utils';
 export function persistCreate(
   address: WalletAddress,
   nftId: string,
-  type: PoapType
+  type: PoapType,
+  initialEventData: string,
 ): SQLUpdate {
   const params: ICreatePoapParams = {
     type,
     address,
     nft_id: nftId,
+    initialEventData,
   };
   return [createPoap, params];
 }

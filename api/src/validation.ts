@@ -5,5 +5,5 @@ import * as D from 'io-ts/Decoder';
 // so a string will be parsed as a number by the @Query decorator
 
 export const psqlNum: D.Decoder<number, number> = {
-  decode: n => (n > 0 && n < 2147483647 ? D.success(n) : D.failure(n, 'bad number')),
+  decode: (n: any) => (n > 0 && n < 2147483647 ? D.success(n) : D.failure(n, 'bad number')),
 };

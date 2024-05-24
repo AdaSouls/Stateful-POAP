@@ -2,9 +2,9 @@
   @name createPoap
 */
 INSERT INTO poaps(
-  address,
-  nft_id,
-  type)
+  smartContract,
+  instance,
+  poapType)
 VALUES (
   :address!,
   :nft_id!,

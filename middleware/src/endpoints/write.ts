@@ -1,4 +1,4 @@
-import type { LevelUpResponse } from '../types';
+//import type { LevelUpResponse } from '../types';
 import { builder } from '@paima/sdk/concise';
 import type { Result } from '@paima/sdk/mw-core';
 import { awaitBlock, postConciseData } from '@paima/sdk/mw-core';
@@ -7,7 +7,7 @@ import type { WalletAddress } from '@paima/sdk/utils';
 import { getOwnedPoaps } from './queries';
 import { getUserWallet } from '../helpers/utility-functions';
 
-async function levelUp(
+/* async function levelUp(
   contractAddress: WalletAddress,
   nftId: string
 ): Promise<Result<LevelUpResponse>> {
@@ -42,8 +42,8 @@ async function levelUp(
   } catch (err) {
     return errorFxn(MiddlewareErrorCode.FAILURE_VERIFYING_NFT_OWNERSHIP);
   }
-}
+} */
 
 export const writeEndpoints = {
-  levelUp,
+  //levelUp,
 };

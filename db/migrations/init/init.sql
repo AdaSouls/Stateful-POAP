@@ -34,7 +34,7 @@ CREATE TABLE events (
   "eventType" VARCHAR(255), 
   "amountOfAttendees" INTEGER, 
   "account" VARCHAR(255), 
-  "poapType" VARCHAR(255) NOT NULL, 
+  "poapType" poap_type NOT NULL, 
   "poapsToBeMinted" INTEGER NOT NULL, 
   "mintedPoaps" INTEGER NOT NULL, 
   "createdAt" TIMESTAMP WITH TIME ZONE NOT NULL, 

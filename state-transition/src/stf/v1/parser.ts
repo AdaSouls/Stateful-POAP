@@ -5,17 +5,18 @@ import { PaimaParser } from '@paima/sdk/concise';
 import type { PoapMintInput, ParsedSubmittedInput } from './types';
 
 const myGrammar = `
-eventCreate         = eventcreate | 
-poapMint            = poapmint|address|tokenId|type
-lvlUp               = l|address|*tokenId
+eventCreate         = eventcreate|*eventId|*eventMaxSupply|*eventMintExpiration|eventOrganizer
+poapMint            = poapmint|address|*tokenId|type|poapInitialData
+poapUpdate          = poapupdate|address|*tokenId|newPoapData
 `;
 
 const poapMint: ParserRecord<PoapMintInput> = {
   renameCommand: 'scheduledData',
   effect: 'poapMint',
-  address: PaimaParser.WalletAddress(),
   tokenId: PaimaParser.NumberParser(),
+  address: PaimaParser.WalletAddress(),
   type: PaimaParser.EnumParser(poaps),
+  initialEventData: PaimaParser.HexParser(),
 };
 
 const parserCommands: Record<string, ParserRecord<ParsedSubmittedInput>> = {
