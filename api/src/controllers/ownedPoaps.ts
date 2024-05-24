@@ -1,7 +1,7 @@
 import { Controller, Get, Query, Route } from 'tsoa';
 import { getUserPoaps, requirePool } from '@game/db';
 import { getAllOwnedNfts } from '@paima/node-sdk/utils-backend';
-import { OwnedPoapsResponse } from '@game/utils';
+import type { OwnedPoapsResponse } from '@game/utils';
 
 @Route('owned_poaps')
 export class OwnedPoapsController extends Controller {
