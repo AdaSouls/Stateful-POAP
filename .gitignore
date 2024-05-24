@@ -40,16 +40,16 @@ packaged/*
 
 # builds
 api/build/**
-#api/*.tsbuildinfo
+api/*.tsbuildinfo
 middleware/build/**
-#middleware/*.tsbuildinfo
+middleware/*.tsbuildinfo
 db/build/**
-#db/*.tsbuildinfo
+db/*.tsbuildinfo
 game-logic/build/**
-#game-logic/*.tsbuildinfo
+game-logic/*.tsbuildinfo
 middleware/build/**
-#middleware/*.tsbuildinfo
+middleware/*.tsbuildinfo
 state-transition/build/**
-#state-transition/*.tsbuildinfo
+state-transition/*.tsbuildinfo
 utils/build/**
-#utils/*.tsbuildinfo
+utils/*.tsbuildinfo
