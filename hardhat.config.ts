@@ -1,9 +1,9 @@
 import type { HardhatUserConfig } from 'hardhat/config';
 import '@nomicfoundation/hardhat-toolbox';
-import '@nomicfoundation/hardhat-ignition-ethers';
 import 'hardhat-dependency-compiler';
 import 'hardhat-interact';
 import 'hardhat-abi-exporter';
+import '@openzeppelin/hardhat-upgrades';
 
 import * as dotenv from 'dotenv';
 
@@ -19,7 +19,6 @@ const config: HardhatUserConfig = {
     tests: './contracts/evm/test',
     cache: './contracts/evm/cache',
     artifacts: './contracts/evm/artifacts',
-    ignition: './contracts/evm/ignition',
   },
   networks: {
     // note: localhost / hardhat networks exist implicitly
