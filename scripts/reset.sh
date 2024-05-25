@@ -6,3 +6,4 @@ cd db/
 npm run build
 cd ..
 npm run compile:api
+npm run pack:middleware

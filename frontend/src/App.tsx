@@ -1,33 +1,33 @@
 import { useState } from 'react';
 import './App.css';
 import mw from 'mw';
-import type { IGetUserCharactersResult } from '@game/db';
+import type { IGetUserPoapsResult } from '@game/db';
 import { WalletMode } from '@paima/sdk/providers';
 
 function App() {
-  const [characters, setCharacters] = useState<IGetUserCharactersResult[]>([]);
+  const [poaps, setPoaps] = useState<IGetUserPoapsResult[]>([]);
   const [wallet, setWallet] = useState('');
 
-  const fetchCharacters = async (userWallet: string) => {
-    const response = await mw.getOwnedCharacters(userWallet);
+  const fetchPoaps = async (userWallet: string) => {
+    const response = await mw.getOwnedPoaps(userWallet);
     if (!response.success) {
-      console.log('Failed to fetch your NFT characters');
+      console.log('Failed to fetch your POAPs');
     } else {
-      setCharacters(response.result.characters);
+      setPoaps(response.result.poaps);
     }
   };
 
-  const characterLvlUp = async (character: IGetUserCharactersResult) => {
-    const response = await mw.levelUp(character.address, character.nft_id);
+  const poapAppendEventData = async (poap: IGetUserPoapsResult) => {
+    const response = await mw.appendEventData(poap.address, poap.nft_id);
     console.log({ response });
     if (response.success) {
-      const newCharacters = characters.map(c =>
-        c.nft_id === character.nft_id ? response.result.character : c
+      const newPoaps = poaps.map(c =>
+        c.nft_id === poap.nft_id ? response.result.poap : c
       );
-      setCharacters(newCharacters);
+      setPoaps(newPoaps);
     } else {
-      console.log('Failed to level up character:', response.errorMessage, response.errorCode);
-      fetchCharacters(wallet);
+      console.log('Failed to append data of new event to poap:', response.errorMessage, response.errorCode);
+      fetchPoaps(wallet);
     }
   };
 
@@ -42,11 +42,11 @@ function App() {
       const { walletAddress } = response.result;
       console.log('Successfully logged in address:', walletAddress);
       setWallet(walletAddress);
-      fetchCharacters(walletAddress);
+      fetchPoaps(walletAddress);
     }
   }
 
-  const hasCharacters = characters.length > 0;
+  const hasPoaps = poaps.length > 0;
 
   return (
     <div className="container">
@@ -58,19 +58,19 @@ function App() {
           {wallet ? <p>Wallet: {wallet}</p> : <p>Wallet: No wallet connected</p>}
           <div className="button-group">
             <button onClick={userWalletLogin}>User Wallet Login</button>
-            <button onClick={() => fetchCharacters(wallet)}>Refresh</button>
+            <button onClick={() => fetchPoaps(wallet)}>Refresh</button>
           </div>
         </div>
         {wallet && (
           <>
-            {hasCharacters ? (
-              <div className="characters">
-                {characters.map(character => (
-                  <div key={character.nft_id} className={`character character-${character.type}`}>
+            {hasPoaps ? (
+              <div className="poaps">
+                {poaps.map(poap => (
+                  <div key={poap.nft_id} className={`poap poap-${poap.type}`}>
                     <p>
-                      {character.type} lvl. {character.level}
+                      {poap.type} lvl. {poap.level}
                     </p>
-                    <button onClick={() => characterLvlUp(character)}>Lvl Up</button>
+                    <button onClick={() => poapAppendEventData(poap)}>Lvl Up</button>
                   </div>
                 ))}
               </div>

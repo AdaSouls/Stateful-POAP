@@ -9,7 +9,7 @@ main {
   gap: 20px;
 }
 
-.characters {
+.poaps {
   margin: 10px 0;
   display: flex;
   flex-direction: row;
@@ -17,25 +17,19 @@ main {
   gap: 10px;
 }
 
-.character {
+.poap {
   border-radius: 5px;
   padding: 10px;
 }
 
-.character-fire {
+.poap-poap {
   background-color: lightcoral;
 }
-.character-earth {
+.poap-soulbound {
   background-color: burlywood;
 }
-.character-water {
+.poap-consensual {
   background-color: lightblue;
-}
-.character-air {
-  background-color: lightskyblue;
-}
-.character-ether {
-  background-color: lightgray;
 }
 
 .button-group {
