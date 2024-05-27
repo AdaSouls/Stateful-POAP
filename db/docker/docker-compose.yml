@@ -6,17 +6,18 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     ports:
-      - "5432:5432"
+      - "5433:5433"
     volumes:
       - poap-1-db:/var/lib/postgresql/data
       - ../migrations/init/init.sql:/docker-entrypoint-initdb.d/init.sql
     healthcheck:
       # Use pg_isready to check postgres is running. Substitute different
       # user `postgres` if you've setup differently to config/pgpass-mainnet
-      test: ["CMD-SHELL", "pg_isready -U postgres -p 5432"]
+      test: ["CMD-SHELL", "pg_isready -U postgres -p 5433"]
       interval: 20s
       timeout: 5s
       retries: 5
+    command: -p 5433
 
 volumes:
   poap-1-db:

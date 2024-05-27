@@ -13,7 +13,15 @@ dotenv.config({ path: '../.env.testnet', processEnv: testnet });
 dotenv.config({ path: '../.env.mainnet', processEnv: mainnet });
 
 const config: HardhatUserConfig = {
-  solidity: '0.8.24',
+  solidity: {
+    version: "0.8.24",
+    settings: {
+      optimizer: {
+        enabled: true,
+        runs: 200,
+      },
+    },
+  },
   paths: {
     sources: './contracts/evm/solidity',
     tests: './contracts/evm/test',

@@ -29,9 +29,22 @@ contract Poap is
     PoapStateful
 {
     // Events
-    event EventToken(uint256 indexed eventId, uint256 tokenId);
-    event Frozen(uint256 id);
-    event Unfrozen(uint256 id);
+    event IssuerCreated(uint256 indexed issuerId);
+    event EventCreated(uint256 indexed issuerId, uint256 indexed eventId);
+    event TokenMinted(
+        uint256 indexed issuerId,
+        uint256 indexed eventId,
+        uint256 tokenId,
+        string initialData
+    );
+    event TokenUpdated(
+        uint256 indexed issuerId,
+        uint256 indexed eventId,
+        uint256 tokenId,
+        string initialData
+    );
+    event TokenFrozen(uint256 id);
+    event TokenUnfrozen(uint256 id);
 
     // Base token URI
     string private ___baseURI;
@@ -47,6 +60,15 @@ contract Poap is
 
     // EventId for each token
     mapping(uint256 => uint256) private _tokenEvent;
+
+    // IssuerId for each event
+    mapping(uint256 => uint256) private _eventIssuer;
+
+    // EventId list for each issuer
+    mapping(uint256 => uint256[]) private _issuerEvents;
+
+    // Issuer holders list
+    mapping(address => mapping(uint256 => uint256)) private _issuerHolders;
 
     bytes4 private constant INTERFACE_ID_ERC721_METADATA = 0x5b5e139f;
 
@@ -145,6 +167,9 @@ contract Poap is
             _isApprovedOrOwner(_msgSender(), tokenId),
             "Poap: not authorized to transfer"
         );
+        uint256 eventId = _tokenEvent[tokenId];
+        uint256 issuerId = _eventIssuer[eventId];
+        _issuerHolders[to][issuerId] = 0;
         super.transferFrom(from, to, tokenId);
     }
 
@@ -172,6 +197,9 @@ contract Poap is
         whenNotPaused
         whenNotFrozen(tokenId)
     {
+        uint256 eventId = _tokenEvent[tokenId];
+        uint256 issuerId = _eventIssuer[eventId];
+        _issuerHolders[to][issuerId] = 0;
         super.safeTransferFrom(from, to, tokenId, _data);
     }
 
@@ -199,6 +227,7 @@ contract Poap is
      * @return A boolean that indicates if the operation was successful.
      */
     function createEventId(
+        uint256 issuerId,
         uint256 eventId,
         uint256 maxSupply,
         uint256 mintExpiration,
@@ -211,6 +240,9 @@ contract Poap is
                 "Poap: mint expiration must be higher than current timestamp plus 3 days"
             );
         }
+        if (_issuerEvents[issuerId].length == 0) {
+            emit IssuerCreated(issuerId);
+        }
         if (maxSupply == 0) {
             _eventMaxSupply[eventId] = type(uint256).max;
         } else {
@@ -219,6 +251,9 @@ contract Poap is
         _eventMintExpiration[eventId] = mintExpiration;
         addEventMinter(eventId, eventOrganizer);
         PoapStateful.setMinter(eventOrganizer);
+        _issuerEvents[issuerId].push(eventId);
+        _eventIssuer[eventId] = issuerId;
+        emit EventCreated(issuerId, eventId);
         return true;
     }
 
@@ -229,11 +264,12 @@ contract Poap is
      * @return A boolean that indicates if the operation was successful.
      */
     function mintToken(
+        uint256 issuerId,
         uint256 eventId,
         address to,
         string calldata initialData
     ) public whenNotPaused onlyEventMinter(eventId) returns (uint256) {
-        return _mintToken(eventId, to, initialData);
+        return _mintToken(issuerId, eventId, to, initialData);
     }
 
     /*
@@ -243,12 +279,13 @@ contract Poap is
      * @return A boolean that indicates if the operation was successful.
      */
     function mintEventToManyUsers(
+        uint256 issuerId,
         uint256 eventId,
         address[] memory to,
         string calldata initialData
     ) public whenNotPaused onlyEventMinter(eventId) returns (bool) {
         for (uint256 i = 0; i < to.length; ++i) {
-            _mintToken(eventId, to[i], initialData);
+            _mintToken(issuerId, eventId, to[i], initialData);
         }
         return true;
     }
@@ -260,22 +297,44 @@ contract Poap is
      * @return A boolean that indicates if the operation was successful.
      */
     function mintUserToManyEvents(
+        uint256[] memory issuerIds,
         uint256[] memory eventIds,
         address to,
         string calldata initialData
     ) public whenNotPaused onlyAdmin returns (bool) {
         for (uint256 i = 0; i < eventIds.length; ++i) {
-            _mintToken(eventIds[i], to, initialData);
+            _mintToken(issuerIds[i], eventIds[i], to, initialData);
         }
         return true;
     }
 
-    function eventMaxSupply(uint256 eventId) public view returns (uint256) {
+    function getEventMaxSupply(uint256 eventId) public view returns (uint256) {
         return _eventMaxSupply[eventId];
     }
 
-    function eventTotalSupply(uint256 eventId) public view returns (uint256) {
+    function getEventTotalSupply(
+        uint256 eventId
+    ) public view returns (uint256) {
         return _eventTotalSupply[eventId];
+    }
+
+    function getEventMintExpiration(
+        uint256 eventId
+    ) public view returns (uint256) {
+        return _eventMintExpiration[eventId];
+    }
+
+    function getIssuerEventList(
+        uint256 issuerId
+    ) public view returns (uint256[] memory) {
+        return _issuerEvents[issuerId];
+    }
+
+    function isMinterIssuerHolder(
+        address minter,
+        uint256 issuerId
+    ) public view returns (bool) {
+        return _issuerHolders[minter][issuerId] != 0;
     }
 
     /*
@@ -304,6 +363,9 @@ contract Poap is
         _eventTotalSupply[eventId]--;
         _totalSupply--;
         delete _tokenEvent[tokenId];
+        // TODO: remove the owner as a holder of this issuer
+        //uint256 issuerId = _eventIssuer[eventId];
+        //_issuerHolders[to][issuerId] = false;
     }
 
     /*
@@ -314,11 +376,16 @@ contract Poap is
      * @return A boolean that indicates if the operation was successful.
      */
     function _mintToken(
+        uint256 issuerId,
         uint256 eventId,
         address to,
         string calldata initialData
     ) internal returns (uint256) {
         // TODO Verify that the token receiver ('to') do not have already a token for the event ('eventId')
+        require(
+            _issuerEvents[issuerId].length > 0,
+            "Poap: issuer does not exist"
+        );
         require(_eventMaxSupply[eventId] != 0, "Poap: event does not exist");
         if (_eventMintExpiration[eventId] > 0) {
             require(
@@ -330,10 +397,21 @@ contract Poap is
             _eventTotalSupply[eventId] < _eventMaxSupply[eventId],
             "Poap: max supply reached for event"
         );
-        uint256 tokenId = PoapStateful.mint(to, initialData);
-        _tokenEvent[tokenId] = eventId;
+
+        uint256 tokenId;
+
+        if (isMinterIssuerHolder(to, issuerId)) {
+            tokenId = _issuerHolders[to][issuerId];
+            emit TokenUpdated(issuerId, eventId, tokenId, initialData);
+        } else {
+            tokenId = PoapStateful.mint(to, initialData);
+            _tokenEvent[tokenId] = eventId;
+            _issuerHolders[to][issuerId] = tokenId;
+            emit TokenMinted(issuerId, eventId, tokenId, initialData);
+        }
+
         _eventTotalSupply[eventId]++;
-        emit EventToken(eventId, tokenId);
+
         return tokenId;
     }
 
@@ -426,7 +504,7 @@ contract Poap is
      */
     function _freeze(uint256 tokenId) internal {
         _tokenFrozen[tokenId] = block.timestamp + freezeDuration;
-        emit Frozen(tokenId);
+        emit TokenFrozen(tokenId);
     }
 
     /*
@@ -435,7 +513,7 @@ contract Poap is
      */
     function _unfreeze(uint256 tokenId) internal {
         delete _tokenFrozen[tokenId];
-        emit Unfrozen(tokenId);
+        emit TokenUnfrozen(tokenId);
     }
 
     // The following functions are overrides required by Solidity.
