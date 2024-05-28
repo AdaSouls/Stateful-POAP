@@ -24,5 +24,4 @@ interface IPoapSoulbound {
      * @param tokenId The identifier for an SBT.
      */
     function locked(uint256) external view returns (bool);
-
 }

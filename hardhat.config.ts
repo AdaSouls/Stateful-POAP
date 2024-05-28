@@ -40,18 +40,41 @@ const config: HardhatUserConfig = {
     testnet: {
       url: testnet.CHAIN_URI ?? '',
       accounts: testnet.DEPLOYER_PRIVATE_KEY == null ? [] : [testnet.DEPLOYER_PRIVATE_KEY],
+      gasPrice: 70000000000,
+      blockGasLimit: 6721975,
     },
     production: {
       url: mainnet.CHAIN_URI ?? '',
       accounts: mainnet.DEPLOYER_PRIVATE_KEY == null ? [] : [mainnet.DEPLOYER_PRIVATE_KEY],
     },
   },
+  etherscan: {
+    customChains: [
+      {
+        network: "milkomeda-c1-devnet",
+        chainId: 200101,
+        urls: {
+          apiURL: "https://explorer-devnet-cardano-evm.c1.milkomeda.com/api",
+          browserURL: "https://explorer-devnet-cardano-evm.c1.milkomeda.com"
+        }
+      },
+      {
+        network: "milkomeda-c1-mainnet",
+        chainId: 2001,
+        urls: {
+          apiURL: "https://explorer-mainnet-cardano-evm.c1.milkomeda.com/api",
+          browserURL: "https://explorer-mainnet-cardano-evm.c1.milkomeda.com"
+        }
+      }
+    ],
+    apiKey: {
+      "milkomeda-c1-devnet": "NO_API_KEY_PROVIDED",
+      "milkomeda-c1-mainnet": "NO_API_KEY_PROVIDED",
+    }
+  },
   dependencyCompiler: {
     paths: [
       '@paima/evm-contracts/contracts/PaimaL2Contract.sol',
-      //'@paima/evm-contracts/contracts/AnnotatedMintNft.sol',
-      //'@paima/evm-contracts/contracts/Proxy/NativeNftSaleProxy.sol',
-      //'@paima/evm-contracts/contracts/Proxy/Erc20NftSaleProxy.sol',
     ],
   },
   abiExporter: {

@@ -48,6 +48,7 @@ export default defineConfig({
   plugins: [react()],
   define: {
     global: 'globalThis',
+    'process.env': process.env,
   },
   optimizeDeps: {
     exclude: ['pg-native'],

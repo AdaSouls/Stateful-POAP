@@ -86,5 +86,4 @@ contract PoapRoles is Initializable, AccessControl {
         revokeRole(DEFAULT_ADMIN_ROLE, account);
         emit AdminRemoved(account);
     }
-
 }

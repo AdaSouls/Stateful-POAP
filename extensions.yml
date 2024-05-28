@@ -1,6 +1,20 @@
 extensions:
-  - name: "statefulPoap"
+  - name: "POAP Mint"
     type: erc721
-    contractAddress: "0xe7f1725e7734ce288f8367e1bb143e90bb3f0512"
-    startBlockHeight: 0
-    scheduledPrefix: "poapmint"
+    contractAddress: "0xc1c8d8A18000bC1D77851CAdad5541937664eB6a"
+    startBlockHeight: 29060207
+    scheduledPrefix: "poapMint"
+  - name: "POAP Issuer Creation"
+    type: generic
+    contractAddress: "0xc1c8d8A18000bC1D77851CAdad5541937664eB6a"
+    startBlockHeight: 29060207
+    abiPath: "./stateful/contracts/evm/abi/contracts/evm/solidity/Poap.sol/Poap.json"
+    eventSignature: "IssuerCreated(uint256)"
+    scheduledPrefix: issuerCreate
+  - name: "POAP Event Creation"
+    type: generic
+    contractAddress: "0xc1c8d8A18000bC1D77851CAdad5541937664eB6a"
+    startBlockHeight: 29060207
+    abiPath: "./stateful/contracts/evm/abi/contracts/evm/solidity/Poap.sol/Poap.json"
+    eventSignature: "EventCreated(uint256,uint256)"
+    scheduledPrefix: eventCreate

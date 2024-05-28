@@ -5,9 +5,10 @@ import { PaimaParser } from '@paima/sdk/concise';
 import type { PoapMintInput, ParsedSubmittedInput } from './types';
 
 const myGrammar = `
-eventCreate         = eventcreate|*eventId|*eventMaxSupply|*eventMintExpiration|eventOrganizer
-poapMint            = poapmint|address|*tokenId|type|poapInitialData
-poapUpdate          = poapupdate|address|*tokenId|newPoapData
+issuerCreate        = issuerCreate|*issuerId|issuerAddress
+eventCreate         = eventCreate|*issuerId|*eventId|*eventMaxSupply|*eventMintExpiration|eventOrganizer
+poapMint            = poapMint|address|*tokenId|type|poapInitialData
+poapUpdate          = poapUpdate|address|*tokenId|newPoapData
 `;
 
 const poapMint: ParserRecord<PoapMintInput> = {

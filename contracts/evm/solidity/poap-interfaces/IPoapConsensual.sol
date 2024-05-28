@@ -6,7 +6,7 @@ pragma solidity 0.8.24;
  * @dev Base contract which allows children to implement a consensual soulbound token behaviour.
  */
 interface IPoapConsensual {
-/// A guideline to standardlize burn-authorization's number coding
+    /// A guideline to standardlize burn-authorization's number coding
     enum BurnAuth {
         IssuerOnly,
         OwnerOnly,
@@ -15,12 +15,12 @@ interface IPoapConsensual {
     }
 
     /// @notice Emitted when a soulbound token is issued.
-    /// @dev This emit is an add-on to nft's transfer emit in order to distinguish sbt 
+    /// @dev This emit is an add-on to nft's transfer emit in order to distinguish sbt
     /// from vanilla nft while providing backward compatibility.
     /// @param from The issuer
     /// @param to The receiver
     /// @param tokenId The id of the issued token
-    event Issued (
+    event Issued(
         address indexed from,
         address indexed to,
         uint256 indexed tokenId,
@@ -31,5 +31,4 @@ interface IPoapConsensual {
     /// @dev unassigned tokenIds are invalid, and queries do throw
     /// @param tokenId The identifier for a token.
     function burnAuth(uint256 tokenId) external view returns (BurnAuth);
-
 }

@@ -2,11 +2,32 @@ import { useState } from 'react';
 import './App.css';
 import mw from 'mw';
 import type { IGetUserPoapsResult } from '@game/db';
-import { WalletMode } from '@paima/sdk/providers';
+import { WalletMode } from '@paima/sdk/providers.js';
+import { createEvent, mintPoap } from './services/poap.js';
 
 function App() {
   const [poaps, setPoaps] = useState<IGetUserPoapsResult[]>([]);
   const [wallet, setWallet] = useState('');
+  const [issuerId, setIssuerId] = useState(0);
+  const [eventId, setEventId] = useState(0);
+  const [maxSupply, setMaxSupply] = useState(0);
+  const [mintExpiration, setMintExpiration] = useState(0);
+
+  const handleIssuerChange = (event: any) => {
+    setIssuerId(event.target.value);
+  }
+
+  const handleEventChange = (event: any) => {
+    setEventId(event.target.value);
+  }
+
+  const handleMaxSupplyChange = (event: any) => {
+    setMaxSupply(event.target.value);
+  }
+
+  const handleMintExpirationChange = (event: any) => {
+    setMintExpiration(event.target.value);
+  }
 
   const fetchPoaps = async (userWallet: string) => {
     const response = await mw.getOwnedPoaps(userWallet);
@@ -17,7 +38,7 @@ function App() {
     }
   };
 
-  const poapAppendEventData = async (poap: IGetUserPoapsResult) => {
+/*   const poapAppendEventData = async (poap: IGetUserPoapsResult) => {
     const response = await mw.appendEventData(poap.address, poap.nft_id);
     console.log({ response });
     if (response.success) {
@@ -29,7 +50,7 @@ function App() {
       console.log('Failed to append data of new event to poap:', response.errorMessage, response.errorCode);
       fetchPoaps(wallet);
     }
-  };
+  }; */
 
   async function userWalletLogin() {
     const response = await mw.userWalletLogin({
@@ -61,6 +82,7 @@ function App() {
             <button onClick={() => fetchPoaps(wallet)}>Refresh</button>
           </div>
         </div>
+        <br />
         {wallet && (
           <>
             {hasPoaps ? (
@@ -68,20 +90,52 @@ function App() {
                 {poaps.map(poap => (
                   <div key={poap.nft_id} className={`poap poap-${poap.type}`}>
                     <p>
-                      {poap.type} lvl. {poap.level}
+                      Type: {poap.type} Address: {poap.address} Token ID: {poap.nft_id}
                     </p>
-                    <button onClick={() => poapAppendEventData(poap)}>Lvl Up</button>
+                    {/* <button onClick={() => poapAppendEventData(poap)}>Lvl Up</button> */}
                   </div>
                 ))}
               </div>
             ) : (
               <p>
-                You don't own any characters. Look into <code>frontend-nft-sale</code> directory to
-                test buying some.
+                You don't own any POAP.
               </p>
             )}
           </>
         )}
+        <div className='container'>
+          <h2>Smart Contract Functions</h2>
+          <div>
+            <div className="button-group">
+              <button onClick={async () => await createEvent(issuerId, eventId, maxSupply, mintExpiration, wallet, "poap")}>Create Event</button>
+              <button onClick={async () => await mintPoap(issuerId, eventId, wallet, "This is the data", "poap")}>Mint Poap</button>
+            </div>
+          </div>
+          <form>
+            <label>
+              Issuer ID:
+              <input type="number" value={issuerId} onChange={handleIssuerChange} />
+            </label>
+            <br />
+            <br />
+            <label>
+              Event ID:
+              <input type="number" value={eventId} onChange={handleEventChange} />
+            </label>
+            <br />
+            <br />
+            <label>
+              Max Supply:
+              <input type="number" value={maxSupply} onChange={handleMaxSupplyChange} />
+            </label>
+            <br />
+            <br />
+            <label>
+              Mint Expiration:
+              <input type="number" value={mintExpiration} onChange={handleMintExpirationChange} />
+            </label>
+          </form>
+        </div>
       </main>
     </div>
   );
