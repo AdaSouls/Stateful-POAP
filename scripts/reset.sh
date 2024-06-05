@@ -7,3 +7,4 @@ npm run build
 cd ..
 npm run compile:api
 npm run pack:middleware
+npm run pack
