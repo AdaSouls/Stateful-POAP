@@ -5,14 +5,20 @@ import type { PoapType } from '@src/common.js';
 
 /** 'GetUserPoaps' parameters type */
 export interface IGetUserPoapsParams {
-  poaps: readonly (string)[];
+  poaps: readonly (number)[];
 }
 
 /** 'GetUserPoaps' return type */
 export interface IGetUserPoapsResult {
   address: string;
-  nft_id: string;
-  type: PoapType;
+  createdAt: Date;
+  eventId: number;
+  instance: number;
+  issuerId: number;
+  poap: string;
+  poapType: PoapType;
+  updatedAt: Date;
+  uuid: string;
 }
 
 /** 'GetUserPoaps' query type */
@@ -21,13 +27,13 @@ export interface IGetUserPoapsQuery {
   result: IGetUserPoapsResult;
 }
 
-const getUserPoapsIR: any = {"usedParamSet":{"poaps":true},"params":[{"name":"poaps","required":true,"transform":{"type":"array_spread"},"locs":[{"a":37,"b":43}]}],"statement":"SELECT * FROM poaps \nWHERE nft_id IN :poaps!"};
+const getUserPoapsIR: any = {"usedParamSet":{"poaps":true},"params":[{"name":"poaps","required":true,"transform":{"type":"array_spread"},"locs":[{"a":39,"b":45}]}],"statement":"SELECT * FROM poaps \nWHERE instance IN :poaps!"};
 
 /**
  * Query generated from SQL:
  * ```
  * SELECT * FROM poaps 
- * WHERE nft_id IN :poaps!
+ * WHERE instance IN :poaps!
  * ```
  */
 export const getUserPoaps = new PreparedQuery<IGetUserPoapsParams,IGetUserPoapsResult>(getUserPoapsIR);

@@ -3,4 +3,4 @@
   @param poaps -> (...)
 */
 SELECT * FROM poaps 
-WHERE nft_id IN :poaps!;
+WHERE instance IN :poaps!;

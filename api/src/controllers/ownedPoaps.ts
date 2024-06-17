@@ -17,7 +17,7 @@ export class OwnedPoapsController extends Controller {
     }
 
     const userPoaps = await getUserPoaps.run(
-      { poaps: nfts.map(nft => nft.tokenId.toString()) },
+      { poaps: nfts.map(nft => parseInt(nft.tokenId.toString())) },
       pool
     );
     return { poaps: userPoaps };

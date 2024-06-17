@@ -3,7 +3,8 @@ import type Prando from '@paima/sdk/prando';
 import type { SubmittedChainData } from '@paima/sdk/utils';
 import type { SQLUpdate } from '@paima/node-sdk/db';
 import type { Pool } from 'pg';
-import { scheduledData } from './transition.js';
+import { issuerCreate, eventCreate } from './transition.js';
+import { IssuerCreateInput } from './types.js';
 
 // entrypoint for your state machine
 export default async function (
@@ -14,8 +15,9 @@ export default async function (
 ): Promise<SQLUpdate[]> {
   console.log(inputData, 'parsing input data');
   console.log(`Processing input string: ${inputData.inputData}`);
-  const user = inputData.userAddress.toLowerCase();
   const parsed = parse(inputData.inputData);
+  console.log("This is parsed: ", parsed);
+
   if (isInvalid(parsed)) {
     console.log(`Invalid input string`);
     return [];
@@ -25,7 +27,11 @@ export default async function (
   switch (parsed.input) {
     case 'scheduledData':
       if (!inputData.scheduled) return [];
-      return scheduledData(parsed);
+      //return scheduledData(parsed);
+    case 'issuerCreate':
+      return issuerCreate(parsed as IssuerCreateInput);
+    case 'eventCreate':
+      return eventCreate(parsed);
     default:
       return [];
   }

@@ -12,6 +12,7 @@ function App() {
   const [eventId, setEventId] = useState(0);
   const [maxSupply, setMaxSupply] = useState(0);
   const [mintExpiration, setMintExpiration] = useState(0);
+  const [eventData, setEventData] = useState("0x2aced68f5c82922da1645b752558fe7882bb07c63e4a756afb4e11ad98345005");
 
   const handleIssuerChange = (event: any) => {
     setIssuerId(event.target.value);
@@ -29,8 +30,13 @@ function App() {
     setMintExpiration(event.target.value);
   }
 
+  const handleEventDataChange = (event: any) => {
+    setEventData(event.target.value);
+  }
+
   const fetchPoaps = async (userWallet: string) => {
     const response = await mw.getOwnedPoaps(userWallet);
+    console.log(response);
     if (!response.success) {
       console.log('Failed to fetch your POAPs');
     } else {
@@ -88,9 +94,9 @@ function App() {
             {hasPoaps ? (
               <div className="poaps">
                 {poaps.map(poap => (
-                  <div key={poap.nft_id} className={`poap poap-${poap.type}`}>
+                  <div key={poap.instance} className={`poap poap-${poap.type}`}>
                     <p>
-                      Type: {poap.type} Address: {poap.address} Token ID: {poap.nft_id}
+                      Type: {poap.type} Address: {poap.address} Token ID: {poap.instance}
                     </p>
                     {/* <button onClick={() => poapAppendEventData(poap)}>Lvl Up</button> */}
                   </div>
@@ -107,8 +113,8 @@ function App() {
           <h2>Smart Contract Functions</h2>
           <div>
             <div className="button-group">
-              <button onClick={async () => await createEvent(issuerId, eventId, maxSupply, mintExpiration, wallet, "poap")}>Create Event</button>
-              <button onClick={async () => await mintPoap(issuerId, eventId, wallet, "This is the data", "poap")}>Mint Poap</button>
+              <button onClick={async () => await createEvent(issuerId, eventId, maxSupply, mintExpiration, wallet, "poap", eventData)}>Create Event</button>
+              <button onClick={async () => await mintPoap(issuerId, eventId, wallet, "0x", "poap")}>Mint/Update Poap</button>
             </div>
           </div>
           <form>
@@ -133,6 +139,12 @@ function App() {
             <label>
               Mint Expiration:
               <input type="number" value={mintExpiration} onChange={handleMintExpirationChange} />
+            </label>
+            <br />
+            <br />
+            <label>
+              Event Data:
+              <input type="string" value={eventData} onChange={handleEventDataChange} />
             </label>
           </form>
         </div>

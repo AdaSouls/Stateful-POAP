@@ -1,7 +1,7 @@
 import { BrowserProvider, JsonRpcProvider } from 'ethers';
 import type { JsonRpcSigner } from 'ethers';
 import { Contract } from 'ethers';
-import Poap__Abi from '../../../contracts/evm/abi/contracts/evm/solidity/Poap.sol/Poap.json';
+import Poap__Abi from '../../../contracts/evm/abi/contracts/evm/solidity/poap-types/Poap.sol/Poap.json';
 import {
   CHAIN_URI,
   CHAIN_CURRENCY_DECIMALS,
@@ -44,7 +44,8 @@ export const createEvent = async (
     maxSupply: number,
     mintExpiration: number,
     eventOrganizer: string, 
-    poap: PoapType
+    poap: PoapType,
+    eventData: string,
 ) => {
     const poapContract = await getPoapContract(eventOrganizer);
     console.log(poapContract);
@@ -52,7 +53,7 @@ export const createEvent = async (
     // https://github.com/ethers-io/ethers.js/discussions/4219#discussioncomment-6375652
     const gasPrice = (await provider.getFeeData()).gasPrice;
   
-    const tx = await poapContract.createEventId(issuerId, eventId, maxSupply, mintExpiration, eventOrganizer, {
+    const tx = await poapContract.createEventId(issuerId, eventId, maxSupply, mintExpiration, eventOrganizer, eventData, {
       gasPrice,
       gasLimit: 800000,
       //value: tokenPrice.toString(),

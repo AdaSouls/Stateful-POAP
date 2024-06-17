@@ -1,12 +1,44 @@
 /* 
+  @name createIssuer
+*/
+INSERT INTO issuers(
+  "issuerId",
+  address)
+VALUES (
+  :issuerId!,
+  :address!
+);
+
+/* 
+  @name createEvent
+*/
+INSERT INTO events(
+  "eventId",
+  "issuerId",
+  "eventMaxSupply",
+  "eventMintExpiration",
+  "eventOrganizer",
+  "eventMetadata")
+VALUES (
+  :eventId!,
+  :issuerId!,
+  :eventMaxSupply!,
+  :eventMintExpiration!,
+  :eventOrganizer!,
+  :eventMetadata!
+);
+
+/* 
   @name createPoap
 */
 INSERT INTO poaps(
-  smartContract,
+  address,
+  "eventId",
   instance,
-  poapType)
+  "poapType")
 VALUES (
   :address!,
-  :nft_id!,
+  :eventId!,
+  :instance!,
   :type!
 );

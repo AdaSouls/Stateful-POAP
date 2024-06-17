@@ -8,3 +8,4 @@ cd ..
 npm run compile:api
 npm run pack:middleware
 npm run pack
+npm run compile -w db/

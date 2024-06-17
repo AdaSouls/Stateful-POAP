@@ -7,29 +7,34 @@ export interface ScheduledDataInput {
 
 export interface IssuerCreateInput {
   input: 'issuerCreate';
-  issuerId: number;
-  issuerAddress: WalletAddress;
+  payload: {
+    issuerId: number;
+    issuerAddress: WalletAddress;
+  }
 }
 
 export interface EventCreateInput {
   input: 'eventCreate';
-  issuerId: number,
-  eventId: number,
-  eventMaxSupply: number,
-  eventMintExpiration: number,
-  eventOrganizer: WalletAddress,
-  eventMetadata: string,
+  payload: {
+    issuerId: number,
+    eventId: number,
+    eventMaxSupply: number,
+    eventMintExpiration: number,
+    eventOrganizer: WalletAddress,
+    eventMetadata: string,
+  }
 }
 
 export interface PoapMintInput extends ScheduledDataInput {
   effect: 'poapMint';
   address: WalletAddress;
   eventId: number;
-  tokenId: string;
+  instance: number;
   type: PoapType;
 }
 
-export interface PoapUpdateInput extends ScheduledDataInput {
+export interface PoapUpdateInput {
+  input: 'poapUpdate';
   effect: 'poapUpdate';
   address: WalletAddress;
   eventId: number;
@@ -41,8 +46,8 @@ export function isPoapMint(input: ScheduledDataInput): input is PoapMintInput {
   return (input as PoapMintInput).effect === 'poapMint';
 }
 
-export function isPoapUpdate(input: ScheduledDataInput): input is PoapUpdateInput {
+export function isPoapUpdate(input: PoapUpdateInput): input is PoapUpdateInput {
   return (input as PoapUpdateInput).effect === 'poapUpdate';
 }
 
-export type ParsedSubmittedInput = IssuerCreateInput | PoapMintInput | InvalidInput;
+export type ParsedSubmittedInput = IssuerCreateInput | EventCreateInput | PoapMintInput | PoapUpdateInput | InvalidInput;

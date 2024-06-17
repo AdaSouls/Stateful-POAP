@@ -21,17 +21,46 @@
 					"address": {
 						"type": "string"
 					},
-					"nft_id": {
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"eventId": {
+						"type": "number",
+						"format": "double"
+					},
+					"instance": {
+						"type": "number",
+						"format": "double"
+					},
+					"issuerId": {
+						"type": "number",
+						"format": "double"
+					},
+					"poap": {
 						"type": "string"
 					},
-					"type": {
+					"poapType": {
 						"$ref": "#/components/schemas/PoapType"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"uuid": {
+						"type": "string"
 					}
 				},
 				"required": [
 					"address",
-					"nft_id",
-					"type"
+					"createdAt",
+					"eventId",
+					"instance",
+					"issuerId",
+					"poap",
+					"poapType",
+					"updatedAt",
+					"uuid"
 				],
 				"type": "object",
 				"additionalProperties": false
