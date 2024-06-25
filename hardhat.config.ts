@@ -7,8 +7,10 @@ import '@openzeppelin/hardhat-upgrades';
 
 import * as dotenv from 'dotenv';
 
+const amoy: Record<string, string> = {};
 const testnet: Record<string, string> = {};
 const mainnet: Record<string, string> = {};
+dotenv.config({ path: '../.env.amoy', processEnv: amoy });
 dotenv.config({ path: '../.env.testnet', processEnv: testnet });
 dotenv.config({ path: '../.env.mainnet', processEnv: mainnet });
 
@@ -43,6 +45,12 @@ const config: HardhatUserConfig = {
       gasPrice: 70000000000,
       blockGasLimit: 6721975,
     },
+    amoy: {
+      url: amoy.CHAIN_URI ?? '',
+      chainId: 80002,
+      gasPrice:  30000000000,
+      accounts: amoy.DEPLOYER_PRIVATE_KEY == null ? [] : [amoy.DEPLOYER_PRIVATE_KEY],
+    },
     production: {
       url: mainnet.CHAIN_URI ?? '',
       accounts: mainnet.DEPLOYER_PRIVATE_KEY == null ? [] : [mainnet.DEPLOYER_PRIVATE_KEY],
@@ -65,11 +73,20 @@ const config: HardhatUserConfig = {
           apiURL: "https://explorer-mainnet-cardano-evm.c1.milkomeda.com/api",
           browserURL: "https://explorer-mainnet-cardano-evm.c1.milkomeda.com"
         }
+      },
+      {
+        network: "polygonAmoy",
+        chainId: 80002,
+        urls: {
+          apiURL: "https://www.oklink.com/api/explorer/v1/contract/verify/async/api/polygonAmoy",
+          browserURL: "https://www.oklink.com/polygonAmoy"
+        },
       }
     ],
     apiKey: {
       "milkomeda-c1-devnet": "NO_API_KEY_PROVIDED",
-      "milkomeda-c1-mainnet": "NO_API_KEY_PROVIDED",
+      "milkomeda-c1-mainnet": "NO_API_KEY_PROVIDED",    
+      "polygonAmoy": "11ebf820-748f-49da-a1d0-36cf8d5f8893",
     }
   },
   dependencyCompiler: {

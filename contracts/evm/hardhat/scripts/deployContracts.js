@@ -1,32 +1,16 @@
 const yaml = require('js-yaml');
 const fs = require('fs');
 const parameters = require("../parameters.json");
+const path = require("path");
 const hre = require("hardhat");
 
-const changeBlockHeight = (blockHeight) => {
-  doc.extensions.startBlockHeight = blockHeight;
-  //delete doc.Organizations[0].Org;
-  //doc.Organizations[0][org].Name = org + 'Name';
-  //doc.Organizations[0][org].ID = org + 'ID';
-  fs.writeFileSync('extensions_new.yml', yaml.dump(doc));
-}
-
-const getBlockNumber = async() => {
+const getBlockNumber = async () => {
   const blockNumber = await hre.ethers.provider.getBlockNumber();
-  console.log(blockNumber)
+  return blockNumber;
 }
 
 async function main() {
   const accounts = await ethers.getSigners();
-
-  // Deploy PaimaL2Contract
-  /*   const PaimaL2 = await hre.ethers.getContractFactory("PaimaL2Contract");
-  const paimaL2 = await PaimaL2.deploy(accounts[0], 1);
-
-  await paimaL2.waitForDeployment();
-
-  console.log("PaimaL2Contract deployed to: ", await paimaL2.getAddress()); */
-
   // Deploy Poap
   const Poap = await hre.ethers.getContractFactory("Poap");
   const poap = await Poap.deploy(parameters.Poap.name, parameters.Poap.symbol, accounts[0].address);
@@ -34,24 +18,35 @@ async function main() {
   await poap.waitForDeployment();
   await poap["initialize(string,address[])"](parameters.Poap.baseUri, []);
 
-  console.log("Poap deployed and initialized at: ", await poap.getAddress());
+  const newContractAddress = await poap.getAddress()
+  console.log("Poap deployed and initialized at: ", newContractAddress);
   
-  console.log("Block height: ", await getBlockNumber());
+  const newBlockHeight = await getBlockNumber();
 
   // I have to update extensions.yml
-  let doc = yaml.load(fs.readFileSync('../../../../../extensions.yml', 'utf-8'));
-  changeBlockHeight(receipt.blockHeight);
+  let doc = yaml.load(fs.readFileSync(path.resolve(__dirname, "../../../../extensions.yml"), 'utf-8'));
+  
+  doc.extensions[0].contractAddress = newContractAddress;
+  doc.extensions[1].contractAddress = newContractAddress;
+  doc.extensions[2].contractAddress = newContractAddress;
 
+  doc.extensions[0].startBlockHeight = newBlockHeight;
+  doc.extensions[1].startBlockHeight = newBlockHeight;
+  doc.extensions[2].startBlockHeight = newBlockHeight;
+
+  fs.writeFileSync('extensions.yml', yaml.dump(doc, {
+    forceQuotes: true  
+  }));
 
   // Verify the contract after deploying
-/*   await hre.run("verify:verify", {
+  await hre.run("verify:verify", {
     address: await poap.getAddress(),
     constructorArguments: [
       parameters.Poap.name,                                               
       parameters.Poap.symbol,
       accounts[0].address,
     ],
-  }); */
+  });
   
 }
 
