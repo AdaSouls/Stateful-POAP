@@ -1,6 +1,6 @@
-# NFT Game Node Template
-
-This documentation provides a basic overview of the template. Each module has its own `README` file with more detailed information.
+# AdaSouls: Stateful POAPs Indexer
+ 
+This documentation provides a basic overview of what are Stateful POAPs and how its indexer works. Each module has its own `README` file with more detailed information.
 
 ## Installation
 
@@ -29,17 +29,13 @@ npm install --save-dev esbuild@latest --target=esbuild-darwin-arm64
 
 ## Building
 
-To compile the Game Node into `endpoints` and `gameCode` entrypoints used by Paima Engine, use the following command:
+To compile the Indexer into `endpoints` and `gameCode` entrypoints used by Paima Engine, to regenerate all `tsoa` routes (reflect changes in the `API`) and to start the `pgtyped` watcher process (if there are any changes to the DB schema or queries), use the following command:
 
 ```
-npm run pack
+npm run reset
 ```
 
-To compile the JavaScript Bundle of the middleware for the game frontend, run the command:
-
-```
-npm run pack:middleware
-```
+This build ran all the Paima Engine internal commands to build everything we need.
 
 ## Prerequisites
 
@@ -58,19 +54,7 @@ Config file `.env.localhost` is created during `npm run initialize` in the paren
 
 Feel free to use examples written in the file for initial testing.
 
-## Development
-
-To reflect changes in the `API`, use the following command to regenerate all `tsoa` routes:
-
-```
-npm run compile:api
-```
-
-If there are any changes to the DB schema or queries, start the `pgtyped` watcher process using the following command. It will regenerate all the DB types used in the project:
-
-```
-npm run compile:db
-```
+## Database Setup
 
 To speed up the development cycle you can at any time completely reset the database and start syncing from the latest blockheight. Run this command, that will modify your `.env.localhost` and `docker-compose.yml` files:
 
@@ -78,15 +62,15 @@ To speed up the development cycle you can at any time completely reset the datab
 npm run database:reset
 ```
 
-## Production
-
 To start the database, run the command:
 
 ```
 npm run database:up
 ```
 
-To run the Game Node, follow these steps:
+## Run the Indexer
+
+To run the Stateful POAPs Indexer, follow these steps:
 
 1. Change to the parent directory where the packaged folder was generated:
 
@@ -106,7 +90,7 @@ You can set the `NETWORK` variable if you want to load a custom config for your 
 NETWORK=testnet ./paima-engine-linux run
 ```
 
-## Documentation
+## Paimage Engine Documentation
 
 If you've got this far you're probably already familiar with our documentation. But if you need to refresh your knowledge you can copy the documentation files to your file system by using the standalone CLI command:
 
