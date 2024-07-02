@@ -54,7 +54,7 @@ export interface ICreateEventQuery {
   result: ICreateEventResult;
 }
 
-const createEventIR: any = {"usedParamSet":{"eventId":true,"issuerId":true,"eventMaxSupply":true,"eventMintExpiration":true,"eventOrganizer":true,"eventMetadata":true},"params":[{"name":"eventId","required":true,"transform":{"type":"scalar"},"locs":[{"a":142,"b":150}]},{"name":"issuerId","required":true,"transform":{"type":"scalar"},"locs":[{"a":155,"b":164}]},{"name":"eventMaxSupply","required":true,"transform":{"type":"scalar"},"locs":[{"a":169,"b":184}]},{"name":"eventMintExpiration","required":true,"transform":{"type":"scalar"},"locs":[{"a":189,"b":209}]},{"name":"eventOrganizer","required":true,"transform":{"type":"scalar"},"locs":[{"a":214,"b":229}]},{"name":"eventMetadata","required":true,"transform":{"type":"scalar"},"locs":[{"a":234,"b":248}]}],"statement":"INSERT INTO events(\n  \"eventId\",\n  \"issuerId\",\n  \"eventMaxSupply\",\n  \"eventMintExpiration\",\n  \"eventOrganizer\",\n  \"eventMetadata\")\nVALUES (\n  :eventId!,\n  :issuerId!,\n  :eventMaxSupply!,\n  :eventMintExpiration!,\n  :eventOrganizer!,\n  :eventMetadata!\n)"};
+const createEventIR: any = {"usedParamSet":{"eventId":true,"issuerId":true,"eventMaxSupply":true,"eventMintExpiration":true,"eventOrganizer":true,"eventMetadata":true},"params":[{"name":"eventId","required":true,"transform":{"type":"scalar"},"locs":[{"a":513,"b":521}]},{"name":"issuerId","required":true,"transform":{"type":"scalar"},"locs":[{"a":526,"b":535}]},{"name":"eventMaxSupply","required":true,"transform":{"type":"scalar"},"locs":[{"a":649,"b":664}]},{"name":"eventMintExpiration","required":true,"transform":{"type":"scalar"},"locs":[{"a":669,"b":689}]},{"name":"eventOrganizer","required":true,"transform":{"type":"scalar"},"locs":[{"a":694,"b":709}]},{"name":"eventMetadata","required":true,"transform":{"type":"scalar"},"locs":[{"a":714,"b":728}]}],"statement":"INSERT INTO events(\n  \"eventId\",\n  \"issuerId\",\n  \"title\",\n  \"description\",\n  \"city\",\n  \"country\",\n  \"startDate\",\n  \"endDate\",\n  \"expiryDate\",\n  \"eventMaxSupply\",\n  \"eventMintExpiration\",\n  \"eventOrganizer\",\n  \"eventMetadata\",\n  \"eventUrl\", \n  \"virtualEvent\", \n  \"image\", \n  \"secretCode\", \n  \"eventTemplateId\", \n  \"email\", \n  \"requestedCodes\", \n  \"privateEvent\", \n  \"purpose\", \n  \"platform\", \n  \"eventType\", \n  \"amountOfAttendees\", \n  \"account\", \n  \"poapType\", \n  \"poapsToBeMinted\", \n  \"mintedPoaps\"\n) \nVALUES (\n  :eventId!,\n  :issuerId!,\n  'testing event',\n  'testinv event description',\n  'buenos aires',\n  'argentina',\n  now(),\n  now(),\n  NULL,\n  :eventMaxSupply!,\n  :eventMintExpiration!,\n  :eventOrganizer!,\n  :eventMetadata!,\n  'eventUrl',\n  NULL,\n  NULL,\n  NULL,\n  NULL,\n  NULL,\n  NULL,\n  NULL,\n  NULL,\n  NULL,\n  NULL,\n  NULL,\n  NULL,\n  'poap',\n  100,\n  0\n)"};
 
 /**
  * Query generated from SQL:
@@ -62,17 +62,64 @@ const createEventIR: any = {"usedParamSet":{"eventId":true,"issuerId":true,"even
  * INSERT INTO events(
  *   "eventId",
  *   "issuerId",
+ *   "title",
+ *   "description",
+ *   "city",
+ *   "country",
+ *   "startDate",
+ *   "endDate",
+ *   "expiryDate",
  *   "eventMaxSupply",
  *   "eventMintExpiration",
  *   "eventOrganizer",
- *   "eventMetadata")
+ *   "eventMetadata",
+ *   "eventUrl", 
+ *   "virtualEvent", 
+ *   "image", 
+ *   "secretCode", 
+ *   "eventTemplateId", 
+ *   "email", 
+ *   "requestedCodes", 
+ *   "privateEvent", 
+ *   "purpose", 
+ *   "platform", 
+ *   "eventType", 
+ *   "amountOfAttendees", 
+ *   "account", 
+ *   "poapType", 
+ *   "poapsToBeMinted", 
+ *   "mintedPoaps"
+ * ) 
  * VALUES (
  *   :eventId!,
  *   :issuerId!,
+ *   'testing event',
+ *   'testinv event description',
+ *   'buenos aires',
+ *   'argentina',
+ *   now(),
+ *   now(),
+ *   NULL,
  *   :eventMaxSupply!,
  *   :eventMintExpiration!,
  *   :eventOrganizer!,
- *   :eventMetadata!
+ *   :eventMetadata!,
+ *   'eventUrl',
+ *   NULL,
+ *   NULL,
+ *   NULL,
+ *   NULL,
+ *   NULL,
+ *   NULL,
+ *   NULL,
+ *   NULL,
+ *   NULL,
+ *   NULL,
+ *   NULL,
+ *   NULL,
+ *   'poap',
+ *   100,
+ *   0
  * )
  * ```
  */

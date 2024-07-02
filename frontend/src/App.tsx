@@ -4,6 +4,7 @@ import mw from 'mw';
 import type { IGetUserPoapsResult } from '@game/db';
 import { WalletMode } from '@paima/sdk/providers.js';
 import { createEvent, mintPoap } from './services/poap.js';
+import { POAP } from "./services/constants.js";
 
 function App() {
   const [poaps, setPoaps] = useState<IGetUserPoapsResult[]>([]);
@@ -94,9 +95,9 @@ function App() {
             {hasPoaps ? (
               <div className="poaps">
                 {poaps.map(poap => (
-                  <div key={poap.instance} className={`poap poap-${poap.type}`}>
+                  <div key={poap.instance} className={`poap poap-${poap.poapType}`}>
                     <p>
-                      Type: {poap.type} Address: {poap.address} Token ID: {poap.instance}
+                      Type: {poap.poapType} Address: {poap.address} Token ID: {poap.instance}
                     </p>
                     {/* <button onClick={() => poapAppendEventData(poap)}>Lvl Up</button> */}
                   </div>
@@ -111,6 +112,7 @@ function App() {
         )}
         <div className='container'>
           <h2>Smart Contract Functions</h2>
+          <h3>Address: {POAP}</h3>
           <div>
             <div className="button-group">
               <button onClick={async () => await createEvent(issuerId, eventId, maxSupply, mintExpiration, wallet, "poap", eventData)}>Create Event</button>

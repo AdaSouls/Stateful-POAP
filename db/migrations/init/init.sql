@@ -7,22 +7,22 @@ CREATE TABLE owners (
   "uuid" VARCHAR(255) NOT NULL UNIQUE, 
   "address" VARCHAR(255) UNIQUE, 
   "email" VARCHAR(255) UNIQUE, 
-  "createdAt" TIMESTAMP WITH TIME ZONE NOT NULL, 
-  "updatedAt" TIMESTAMP WITH TIME ZONE NOT NULL, 
+  "createdAt" TIMESTAMP WITH TIME ZONE DEFAULT(now()), 
+  "updatedAt" TIMESTAMP WITH TIME ZONE DEFAULT(now()), 
   PRIMARY KEY ("uuid"));
 
 CREATE TABLE issuers (
   "issuerId" INTEGER NOT NULL UNIQUE,
   "address" VARCHAR(255) UNIQUE, 
-  "createdAt" TIMESTAMP WITH TIME ZONE NOT NULL, 
-  "updatedAt" TIMESTAMP WITH TIME ZONE NOT NULL, 
+  "createdAt" TIMESTAMP WITH TIME ZONE DEFAULT(now()),
+  "updatedAt" TIMESTAMP WITH TIME ZONE DEFAULT(now()),
   PRIMARY KEY ("issuerId"));
 
 CREATE TABLE events (
   "eventId" INTEGER NOT NULL UNIQUE, 
   "issuerId" INTEGER NOT NULL UNIQUE,
-  "title" VARCHAR(255) NOT NULL, 
-  "description" VARCHAR(255) NOT NULL, 
+  "title" VARCHAR(255), 
+  "description" VARCHAR(255), 
   "city" VARCHAR(255), 
   "country" VARCHAR(255), 
   "startDate" TIMESTAMP WITH TIME ZONE NOT NULL, 
@@ -33,13 +33,13 @@ CREATE TABLE events (
   "eventOrganizer" VARCHAR(255),
   "eventMetadata" VARCHAR(255),
   "eventUrl" VARCHAR(255), 
-  "virtualEvent" BOOLEAN NOT NULL, 
-  "image" VARCHAR(255) NOT NULL, 
+  "virtualEvent" BOOLEAN, 
+  "image" VARCHAR(255), 
   "secretCode" VARCHAR(255), 
   "eventTemplateId" VARCHAR(255), 
-  "email" VARCHAR(255) NOT NULL, 
-  "requestedCodes" INTEGER NOT NULL, 
-  "privateEvent" VARCHAR(255) NOT NULL, 
+  "email" VARCHAR(255), 
+  "requestedCodes" INTEGER, 
+  "privateEvent" VARCHAR(255), 
   "purpose" VARCHAR(255), 
   "platform" VARCHAR(255), 
   "eventType" VARCHAR(255), 
@@ -48,9 +48,8 @@ CREATE TABLE events (
   "poapType" poap_type NOT NULL, 
   "poapsToBeMinted" INTEGER NOT NULL, 
   "mintedPoaps" INTEGER NOT NULL, 
-  "createdAt" TIMESTAMP WITH TIME ZONE NOT NULL, 
-  "updatedAt" TIMESTAMP WITH TIME ZONE NOT NULL, 
-  "ownerId" VARCHAR(255) REFERENCES "owners" ("uuid") ON DELETE SET NULL ON UPDATE CASCADE, 
+  "createdAt" TIMESTAMP WITH TIME ZONE DEFAULT(now()), 
+  "updatedAt" TIMESTAMP WITH TIME ZONE DEFAULT(now()), 
   PRIMARY KEY ("eventId"));
 
 CREATE TABLE poaps (
@@ -59,8 +58,8 @@ CREATE TABLE poaps (
   "poapType" poap_type NOT NULL,
   "address" VARCHAR(255) NOT NULL, 
   "instance" INTEGER NOT NULL UNIQUE, 
-  "createdAt" TIMESTAMP WITH TIME ZONE NOT NULL, 
-  "updatedAt" TIMESTAMP WITH TIME ZONE NOT NULL,
+  "createdAt" TIMESTAMP WITH TIME ZONE DEFAULT(now()), 
+  "updatedAt" TIMESTAMP WITH TIME ZONE DEFAULT(now()),
   "eventId" INTEGER NOT NULL UNIQUE REFERENCES "events" ("eventId") ON DELETE SET NULL ON UPDATE CASCADE, 
   "issuerId" INTEGER NOT NULL UNIQUE REFERENCES "issuers" ("issuerId") ON DELETE SET NULL ON UPDATE CASCADE, 
   PRIMARY KEY ("uuid"));

@@ -39,14 +39,14 @@ async function main() {
   }));
 
   // Verify the contract after deploying
-  await hre.run("verify:verify", {
+  /*await hre.run("verify:verify", {
     address: await poap.getAddress(),
     constructorArguments: [
       parameters.Poap.name,                                               
       parameters.Poap.symbol,
       accounts[0].address,
     ],
-  });
+  });*/
   
 }
 

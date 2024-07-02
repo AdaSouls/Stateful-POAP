@@ -11,13 +11,13 @@ export interface IGetUserPoapsParams {
 /** 'GetUserPoaps' return type */
 export interface IGetUserPoapsResult {
   address: string;
-  createdAt: Date;
+  createdAt: Date | null;
   eventId: number;
   instance: number;
   issuerId: number;
   poap: string;
   poapType: PoapType;
-  updatedAt: Date;
+  updatedAt: Date | null;
   uuid: string;
 }
 
