@@ -45,7 +45,6 @@ export const createEvent = async (
     mintExpiration: number,
     eventOrganizer: string, 
     poap: PoapType,
-    eventData: string,
 ) => {
     const poapContract = await getPoapContract(eventOrganizer);
     console.log(poapContract);
@@ -53,7 +52,7 @@ export const createEvent = async (
     // https://github.com/ethers-io/ethers.js/discussions/4219#discussioncomment-6375652
     const gasPrice = (await provider.getFeeData()).gasPrice;
   
-    const tx = await poapContract.createEventId(issuerId, eventId, maxSupply, mintExpiration, eventOrganizer, eventData, {
+    const tx = await poapContract.createEventId(issuerId, eventId, maxSupply, mintExpiration, eventOrganizer, {
       gasPrice,
       gasLimit: 800000,
       //value: tokenPrice.toString(),

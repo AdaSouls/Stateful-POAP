@@ -20,7 +20,7 @@ CREATE TABLE issuers (
 
 CREATE TABLE events (
   "eventId" INTEGER NOT NULL UNIQUE, 
-  "issuerId" INTEGER NOT NULL UNIQUE,
+  "issuerId" INTEGER NOT NULL,
   "title" VARCHAR(255), 
   "description" VARCHAR(255), 
   "city" VARCHAR(255), 

@@ -10,16 +10,9 @@ import type { IssuerCreateInput, EventCreateInput, PoapMintInput, PoapUpdateInpu
 const myGrammar = `
 issuerCreate        = issuerCreate|payload
 eventCreate         = eventCreate|payload
-poapMint            = poapMint|address|eventId|tokenId|type
-poapUpdate          = poapUpdate|address|eventId|tokenId|type
+poapMint            = poapMint|payload
+poapUpdate          = poapUpdate|payload
 `;
-
-/* const issuerCreate: ParserRecord<IssuerCreateInput> = {
-  renameCommand: 'issuerCreate',
-  effect: 'issuerCreate',
-  issuerId: PaimaParser.NumberParser(),
-  issuerAddress: PaimaParser.WalletAddress(),
-}; */
 
 const issuerCreate = {
   payload: (
@@ -43,9 +36,9 @@ const eventCreate = {
     if (!input) throw new Error('Input expected for swap_commands');
     const data: Record<string, string> = JSON.parse(input);
     const issuerId = parseInt(data.issuerId, 10);
-    const eventId = parseInt(data.issuerId, 10);
-    const eventMaxSupply = parseInt(data.issuerId, 10);
-    const eventMintExpiration = parseInt(data.issuerId, 10);
+    const eventId = parseInt(data.eventId, 10);
+    const eventMaxSupply = parseInt(data.eventMaxSupply, 10);
+    const eventMintExpiration = parseInt(data.eventMintExpiration, 10);
     const eventOrganizer = data.eventOrganizer;
     const eventMetadata = data.eventOrganizer;
 
@@ -53,34 +46,37 @@ const eventCreate = {
   }
 }
 
-/* const eventCreate: ParserRecord<EventCreateInput> = {
-  renameCommand: 'eventCreate',
-  effect: 'eventCreate',
-  issuerId: PaimaParser.NumberParser(),
-  eventId: PaimaParser.NumberParser(),
-  eventMaxSupply: PaimaParser.NumberParser(),
-  eventMintExpiration: PaimaParser.NumberParser(),
-  eventOrganizer: PaimaParser.WalletAddress(),
-  eventMetadata: PaimaParser.HexParser(),
-}; */
+const poapMint = {
+  payload: (
+    _: string,
+    input: string
+  ): { issuerId: number; eventId: number, tokenId: number, initialData: string } => {
+    if (!input) throw new Error('Input expected for swap_commands');
+    const data: Record<string, string> = JSON.parse(input);
+    const issuerId = parseInt(data.issuerId, 10);
+    const eventId = parseInt(data.eventId, 10);
+    const tokenId = parseInt(data.tokenId, 10);
+    const initialData = data.initialData;
 
-const poapMint: ParserRecord<PoapMintInput> = {
-  renameCommand: 'scheduledData',
-  effect: 'poapMint',
-  address: PaimaParser.WalletAddress(),
-  eventId: PaimaParser.NumberParser(),
-  instance: PaimaParser.NumberParser(),
-  type: PaimaParser.EnumParser(poaps),
-};
+    return { issuerId, eventId, tokenId, initialData };
+  }
+}
 
-const poapUpdate: ParserRecord<PoapUpdateInput> = {
-  renameCommand: 'poapUpdate',
-  effect: 'poapUpdate',
-  address: PaimaParser.WalletAddress(),
-  eventId: PaimaParser.NumberParser(),
-  tokenId: PaimaParser.NumberParser(),
-  type: PaimaParser.EnumParser(poaps),
-};
+const poapUpdate = {
+  payload: (
+    _: string,
+    input: string
+  ): { issuerId: number; eventId: number, tokenId: number, initialData: string } => {
+    if (!input) throw new Error('Input expected for swap_commands');
+    const data: Record<string, string> = JSON.parse(input);
+    const issuerId = parseInt(data.issuerId, 10);
+    const eventId = parseInt(data.eventId, 10);
+    const tokenId = parseInt(data.tokenId, 10);
+    const initialData = data.initialData;
+
+    return { issuerId, eventId, tokenId, initialData };
+  }
+}
 
 const parserCommands: Record<string, ParserRecord<ParsedSubmittedInput>> = {
   issuerCreate,
@@ -106,72 +102,3 @@ function parse(s: string): ParsedSubmittedInput {
 }
 
 export default parse;
-
-/* Encode/Decode
-
-import { ethers } from "ethers";
-
-const abiEncoder = new ethers.AbiCoder();
-
-const getTimestamp = (date: Date) => {
-  return date.getTime() / 1000;
-};
-
-export const encodeStatus = (poapStatus: IEvent[]) => {
-  const data = poapStatus.map((status) => {
-    return {
-      ...status,
-      startDate: getTimestamp(status.startDate),
-      endDate: getTimestamp(status.endDate),
-      expiryDate: getTimestamp(
-        status.expiryDate || new Date(Date.now() + 60 * 60 * 24 * 365 * 99)
-      ),
-    };
-  });
-  const encodedStatus = abiEncoder.encode(
-    [
-      "tuple(string title,string description,string city,string country,uint256 startDate,uint256 endDate,uint256 expiryDate,uint256 year,string eventUrl,bool virtualEvent,string image,uint256 secretCode,uint256 eventTemplateId,string email,uint256 requestedCodes,bool privateEvent,string purpose,string platform,string eventType,uint256 amountOfAttendees,string account,string poapType,uint256 poapsToBeMinted,uint256 mintedPoaps,uint256 idInContract)[]",
-    ],
-    [data]
-  );
-  return encodedStatus;
-};
-
-export const decodeStatus = (status: string) => {
-  const decodedStatus = abiEncoder.decode(
-    [
-      "tuple(string title,string description,string city,string country,uint256 startDate,uint256 endDate,uint256 expiryDate,uint256 year,string eventUrl,bool virtualEvent,string image,uint256 secretCode,uint256 eventTemplateId,string email,uint256 requestedCodes,bool privateEvent,string purpose,string platform,string eventType,uint256 amountOfAttendees,string account,string poapType,uint256 poapsToBeMinted,uint256 mintedPoaps,uint256 idInContract)[]",
-    ],
-    status
-  );
-
-  const decodedArray = decodedStatus[0].map((inputArray: any) => ({
-    title: inputArray[0] as string,
-    description: inputArray[1] as string,
-    city: inputArray[2] as string,
-    country: inputArray[3] as string,
-    startDate: new Date(Number(inputArray[4]) * 1000), // Convert to milliseconds
-    endDate: new Date(Number(inputArray[5]) * 1000), // Convert to milliseconds
-    expiryDate: new Date(Number(inputArray[6]) * 1000), // Convert to milliseconds
-    year: Number(inputArray[7]),
-    eventUrl: inputArray[8] as string,
-    virtualEvent: inputArray[9] as boolean,
-    image: inputArray[10] as string,
-    secretCode: Number(inputArray[11]),
-    eventTemplateId: Number(inputArray[12]),
-    email: inputArray[13] as string,
-    requestedCodes: Number(inputArray[14]),
-    privateEvent: inputArray[15] as boolean,
-    purpose: inputArray[16] as string,
-    platform: inputArray[17] as string,
-    eventType: inputArray[18] as string,
-    amountOfAttendees: Number(inputArray[19]),
-    account: inputArray[20] as string,
-    poapType: inputArray[21] as string,
-    poapsToBeMinted: Number(inputArray[22]),
-    mintedPoaps: Number(inputArray[23]),
-    idInContract: Number(inputArray[24])
-  }));
-  return decodedArray;
-};
-*/

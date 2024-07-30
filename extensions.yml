@@ -1,20 +1,29 @@
 extensions:
-  - name: 'POAP Mint'
-    type: 'erc721'
-    contractAddress: '0xAAEDffc6d5E0c957f8329F5605e88a5c8E44597D'
-    startBlockHeight: 8689329
-    scheduledPrefix: 'poapMint'
-  - name: 'POAP Issuer Creation'
-    type: 'generic'
-    contractAddress: '0xAAEDffc6d5E0c957f8329F5605e88a5c8E44597D'
-    startBlockHeight: 8689329
-    abiPath: './stateful/contracts/evm/abi/contracts/evm/solidity/poap-types/Poap.sol/Poap.json'
-    eventSignature: 'IssuerCreated(uint256,address)'
-    scheduledPrefix: 'issuerCreate'
-  - name: 'POAP Event Creation'
-    type: 'generic'
-    contractAddress: '0xAAEDffc6d5E0c957f8329F5605e88a5c8E44597D'
-    startBlockHeight: 8689329
-    abiPath: './stateful/contracts/evm/abi/contracts/evm/solidity/poap-types/Poap.sol/Poap.json'
-    eventSignature: 'EventCreated(uint256,uint256,uint256,uint256,address,bytes32)'
-    scheduledPrefix: 'eventCreate'
+  - name: "POAP Issuer Creation"
+    type: "generic"
+    contractAddress: "0x85dD78eD37e0a73F6d5cbC15581a22F940Bf74e7"
+    startBlockHeight: 31782134
+    abiPath: "./stateful/contracts/evm/abi/contracts/evm/solidity/poap-types/Poap.sol/Poap.json"
+    eventSignature: "IssuerCreated(uint256,address)"
+    scheduledPrefix: "issuerCreate"
+  - name: "POAP Event Creation"
+    type: "generic"
+    contractAddress: "0x85dD78eD37e0a73F6d5cbC15581a22F940Bf74e7"
+    startBlockHeight: 31782134
+    abiPath: "./stateful/contracts/evm/abi/contracts/evm/solidity/poap-types/Poap.sol/Poap.json"
+    eventSignature: "EventCreated(uint256,uint256,uint256,uint256,address,bytes32)"
+    scheduledPrefix: "eventCreate"
+  - name: "POAP Mint"
+    type: "generic"
+    contractAddress: "0x85dD78eD37e0a73F6d5cbC15581a22F940Bf74e7"
+    startBlockHeight: 31782134
+    abiPath: "./stateful/contracts/evm/abi/contracts/evm/solidity/poap-types/Poap.sol/Poap.json"
+    eventSignature: "TokenMinted(uint256,uint256,uint256,string)"
+    scheduledPrefix: "poapMint"
+  - name: "POAP Update"
+    type: "generic"
+    contractAddress: "0x85dD78eD37e0a73F6d5cbC15581a22F940Bf74e7"
+    startBlockHeight: 31782134
+    abiPath: "./stateful/contracts/evm/abi/contracts/evm/solidity/poap-types/Poap.sol/Poap.json"
+    eventSignature: "TokenUpdated(uint256,uint256,uint256,string)"
+    scheduledPrefix: "poapUpdate"

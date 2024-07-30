@@ -13,7 +13,6 @@ function App() {
   const [eventId, setEventId] = useState(0);
   const [maxSupply, setMaxSupply] = useState(0);
   const [mintExpiration, setMintExpiration] = useState(0);
-  const [eventData, setEventData] = useState("0x2aced68f5c82922da1645b752558fe7882bb07c63e4a756afb4e11ad98345005");
 
   const handleIssuerChange = (event: any) => {
     setIssuerId(event.target.value);
@@ -29,10 +28,6 @@ function App() {
 
   const handleMintExpirationChange = (event: any) => {
     setMintExpiration(event.target.value);
-  }
-
-  const handleEventDataChange = (event: any) => {
-    setEventData(event.target.value);
   }
 
   const fetchPoaps = async (userWallet: string) => {
@@ -115,7 +110,7 @@ function App() {
           <h3>Address: {POAP}</h3>
           <div>
             <div className="button-group">
-              <button onClick={async () => await createEvent(issuerId, eventId, maxSupply, mintExpiration, wallet, "poap", eventData)}>Create Event</button>
+              <button onClick={async () => await createEvent(issuerId, eventId, maxSupply, mintExpiration, wallet, "poap")}>Create Event</button>
               <button onClick={async () => await mintPoap(issuerId, eventId, wallet, "0x", "poap")}>Mint/Update Poap</button>
             </div>
           </div>
@@ -141,12 +136,6 @@ function App() {
             <label>
               Mint Expiration:
               <input type="number" value={mintExpiration} onChange={handleMintExpirationChange} />
-            </label>
-            <br />
-            <br />
-            <label>
-              Event Data:
-              <input type="string" value={eventData} onChange={handleEventDataChange} />
             </label>
           </form>
         </div>
