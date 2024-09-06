@@ -6,9 +6,9 @@ import {ERC721} from "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import {IERC721} from "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 import {ERC721Enumerable} from "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import {IERC721Metadata} from "@openzeppelin/contracts/token/ERC721/extensions/IERC721Metadata.sol";
-import {PoapStateful} from "../poap-extensions/PoapStateful.sol";
-import {PoapRoles, AccessControl} from "../poap-extensions/PoapRoles.sol";
-import {PoapPausable} from "../poap-extensions/PoapPausable.sol";
+import {PoapStateful} from "./poap-extensions/PoapStateful.sol";
+import {PoapRoles, AccessControl} from "./poap-extensions/PoapRoles.sol";
+import {PoapPausable} from "./poap-extensions/PoapPausable.sol";
 import {Strings} from "@openzeppelin/contracts/utils/Strings.sol";
 
 // Desired Features
@@ -37,18 +37,8 @@ contract Poap is
         uint256 eventMintExpiration,
         address eventOrganizer
     );
-    event TokenMinted(
-        uint256 issuerId,
-        uint256 eventId,
-        uint256 tokenId,
-        string initialData
-    );
-    event TokenUpdated(
-        uint256 issuerId,
-        uint256 eventId,
-        uint256 tokenId,
-        string initialData
-    );
+    event TokenMinted(uint256 issuerId, uint256 eventId, uint256 tokenId);
+    event TokenUpdated(uint256 issuerId, uint256 eventId, uint256 tokenId);
     event TokenFrozen(uint256 tokenId);
     event TokenUnfrozen(uint256 tokenId);
 
@@ -283,10 +273,9 @@ contract Poap is
     function mintToken(
         uint256 issuerId,
         uint256 eventId,
-        address to,
-        string calldata initialData
+        address to
     ) public whenNotPaused onlyEventMinter(eventId) returns (uint256) {
-        return _mintToken(issuerId, eventId, to, initialData);
+        return _mintToken(issuerId, eventId, to);
     }
 
     /*
@@ -298,11 +287,10 @@ contract Poap is
     function mintEventToManyUsers(
         uint256 issuerId,
         uint256 eventId,
-        address[] memory to,
-        string calldata initialData
+        address[] memory to
     ) public whenNotPaused onlyEventMinter(eventId) returns (bool) {
         for (uint256 i = 0; i < to.length; ++i) {
-            _mintToken(issuerId, eventId, to[i], initialData);
+            _mintToken(issuerId, eventId, to[i]);
         }
         return true;
     }
@@ -316,11 +304,10 @@ contract Poap is
     function mintUserToManyEvents(
         uint256[] memory issuerIds,
         uint256[] memory eventIds,
-        address to,
-        string calldata initialData
+        address to
     ) public whenNotPaused onlyAdmin returns (bool) {
         for (uint256 i = 0; i < eventIds.length; ++i) {
-            _mintToken(issuerIds[i], eventIds[i], to, initialData);
+            _mintToken(issuerIds[i], eventIds[i], to);
         }
         return true;
     }
@@ -402,8 +389,7 @@ contract Poap is
     function _mintToken(
         uint256 issuerId,
         uint256 eventId,
-        address to,
-        string calldata initialData
+        address to
     ) internal returns (uint256) {
         require(
             !isMinterEventHolder(to, eventId),
@@ -430,13 +416,13 @@ contract Poap is
 
         if (isMinterIssuerHolder(to, issuerId)) {
             tokenId = _issuerHolders[to][issuerId];
-            emit TokenUpdated(issuerId, eventId, tokenId, initialData);
+            emit TokenUpdated(issuerId, eventId, tokenId);
         } else {
-            tokenId = PoapStateful.mint(to, initialData);
+            tokenId = PoapStateful.mint(to, "");
             _tokenEvent[tokenId] = eventId;
             _issuerHolders[to][issuerId] = tokenId;
             _eventHolders[to][eventId] = true;
-            emit TokenMinted(issuerId, eventId, tokenId, initialData);
+            emit TokenMinted(issuerId, eventId, tokenId);
         }
 
         _eventTotalSupply[eventId]++;
